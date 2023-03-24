@@ -44,15 +44,10 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AstraTemplate"
+rootProject.name = "SynK"
 
-// Shared
-include("modules:dto")
-include("modules:api-remote")
-include("modules:api-local")
-// Spigot
+include("modules:models")
+include("modules:local-api")
+include("modules:remote-api")
 include("plugin")
-// Fabric
-include("fabric")
-// Forge
-// include("forge")
+

@@ -16,24 +16,24 @@ dependencies {
     implementation(libs.kotlin.serializationKaml)
     // AstraLibs
     implementation(libs.astralibs.ktxCore)
-    implementation(libs.astralibs.orm)
-    implementation(libs.astralibs.spigotGui)
     implementation(libs.astralibs.spigotCore)
     implementation(libs.bstats.bukkit)
+    // SQL
+    implementation(libs.xerialSqliteJdbcLib)
+    implementation(libs.exposed.java.time)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    // Test
+    testImplementation(kotlin("test"))
+    testImplementation(libs.orgTesting)
     // Spigot dependencies
+    compileOnly(libs.essentialsx)
     compileOnly(libs.paperApi)
-//    compileOnly(libs.spigotApi)
-//    compileOnly(libs.spigot)
-    // Test-Core
-    testImplementation(platform(libs.junit.bom))
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    // Test-libs
-    testImplementation(libs.coroutines.core)
-    testImplementation(libs.coroutines.coreJvm)
-    testImplementation(libs.xerial.sqlite.jdbc)
+    compileOnly(libs.spigotApi)
+    compileOnly(libs.spigot)
     // Local
-    implementation(project(":modules:api-local"))
-    implementation(project(":modules:api-remote"))
-    implementation(project(":modules:dto"))
+    implementation(project(":modules:models"))
+    implementation(project(":modules:remote-api"))
+    implementation(project(":modules:local-api"))
 }
