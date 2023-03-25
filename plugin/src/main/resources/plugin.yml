@@ -1,7 +1,7 @@
-main: com.astrainteractive.astrasync.AstraSync
-prefix: AstraSync
+main: com.astrainteractive.synk.SynK
+prefix: SynK
 description: '${description}'
-name: AstraSync
+name: SynK
 version: '${version}'
 authors: [ MakeevRoman ]
 author: MakeevRoman

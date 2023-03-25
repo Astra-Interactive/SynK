@@ -18,9 +18,9 @@ import ru.astrainteractive.astralibs.events.GlobalEventListener
 /**
  * Initial class for your plugin
  */
-class AstraSync : JavaPlugin() {
+class SynK : JavaPlugin() {
     companion object {
-        lateinit var instance: AstraSync
+        lateinit var instance: SynK
     }
 
     init {
