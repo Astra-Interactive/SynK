@@ -28,11 +28,11 @@ object ServiceLocator {
     }
     val databaseModule = module {
         val config by configModule
-        DatabaseFactory(config)
+        DatabaseFactory(config).value
     }
     val RemoteDataSourceModule = module {
         val database by databaseModule
-        RemoteApiImpl() as RemoteApi
+        RemoteApiImpl(database) as RemoteApi
     }
     val serializer = module {
         Serializer(BukkitIOStreamProvider)

@@ -7,7 +7,6 @@ import com.astrainteractive.synk.models.dto.PlayerDTO
 import com.astrainteractive.synk.utils.Locker
 import kotlinx.coroutines.*
 import ru.astrainteractive.astralibs.async.PluginScope
-import ru.astrainteractive.astralibs.di.getValue
 import java.util.*
 
 class EventController(
@@ -35,7 +34,7 @@ class EventController(
         onLoaded: suspend CoroutineScope.(PlayerDTO) -> Unit
     ) = withLock(player.minecraftUUID) {
         withContext(Dispatchers.IO) { localDataSource.savePlayer(player, LocalInventoryApi.TYPE.ENTER) }
-        val playerDTO = sqlDataSource.select(player.minecraftUUID).getOrNull() ?: return@withLock
+        val playerDTO = sqlDataSource.select(player.minecraftUUID) ?: return@withLock
         onLoaded.invoke(this, playerDTO)
     }
 
@@ -44,7 +43,7 @@ class EventController(
         type: LocalInventoryApi.TYPE = LocalInventoryApi.TYPE.EXIT
     ) = withLock(player.minecraftUUID) {
         localDataSource.savePlayer(player, type)
-        sqlDataSource.update(player)
+        sqlDataSource.insertOrUpdate(player)
     }
 
     fun saveAllPlayers(players: List<PlayerDTO>) = PluginScope.launch(Dispatchers.IO) {
@@ -60,7 +59,7 @@ class EventController(
         onUpdated: () -> Unit
     ) = withLock(player.minecraftUUID) {
         localDataSource.savePlayer(player, LocalInventoryApi.TYPE.EXIT)
-        sqlDataSource.update(player)
+        sqlDataSource.insertOrUpdate(player)
         onUpdated.invoke()
 //            BungeeController.connectPlayerToServer(server, player)
     }

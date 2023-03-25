@@ -14,7 +14,7 @@ object PlayerTable : IntIdTable() {
     val experience: Column<Int> = integer("experience")
     val health: Column<Double> = double("health")
     val foodLevel: Column<Int> = integer("foodLevel")
-    val lastServerName: Column<String> = varchar("last_server_name", 32)
+    val lastServerName: Column<String> = varchar("last_server_name", 128)
     val items: Column<String> = text("items")
     val enderChestItems: Column<String> = text("ender_chest")
     val effects: Column<String> = text("effects")
