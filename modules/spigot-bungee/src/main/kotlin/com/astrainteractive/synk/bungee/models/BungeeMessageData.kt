@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.api.messaging.models
+package com.astrainteractive.synk.bungee.models
 
 data class BungeeMessageData(
     val action: String,

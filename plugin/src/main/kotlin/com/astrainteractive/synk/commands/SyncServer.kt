@@ -1,7 +1,9 @@
 package com.astrainteractive.synk.commands
 
 import CommandManager
+import com.astrainteractive.synk.bungee.BungeeController
 import com.astrainteractive.synk.di.ServiceLocator
+import com.astrainteractive.synk.shared.EventController
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.commands.registerCommand
@@ -20,6 +22,9 @@ fun CommandManager.tabCompleter() = AstraLibs.instance.registerTabCompleter("syn
 
 fun CommandManager.syncServer() = AstraLibs.instance.registerCommand("syncserver") {
     val translation by ServiceLocator.translationModule
+    val eventController by ServiceLocator.eventController
+    val bukkitPlayerMapper by ServiceLocator.bukkitPlayerMapper
+
     sender.sendMessage(translation.pleaseWait)
     sender.sendMessage(translation.inventoryLossWarning)
     val player = sender as? Player
@@ -31,6 +36,11 @@ fun CommandManager.syncServer() = AstraLibs.instance.registerCommand("syncserver
         sender.sendMessage(translation.inputServerName)
         return@registerCommand
     }
-    com.astrainteractive.synk.events.EventController.changeServer(player, server)
+    eventController.changeServer(
+        player = bukkitPlayerMapper.toDTO(player),
+        onUpdated = {
+            BungeeController.connectPlayerToServer(server, player)
+        }
+    )
 }
 

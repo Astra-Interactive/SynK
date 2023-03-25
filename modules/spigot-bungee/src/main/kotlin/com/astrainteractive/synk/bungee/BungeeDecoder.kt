@@ -1,6 +1,6 @@
-package com.astrainteractive.synk.api.messaging
+package com.astrainteractive.synk.bungee
 
-import com.astrainteractive.synk.api.messaging.models.BungeeMessage
+import com.astrainteractive.synk.bungee.models.BungeeMessage
 import com.google.common.io.ByteArrayDataOutput
 import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit
@@ -30,7 +30,7 @@ object BungeeDecoder {
         message: String? = null,
         sender: PluginMessageRecipient = defaultMessageRecipient,
     ) {
-        val out = BungeeDecoder.createByteOutputArray(action.value, message)
+        val out = createByteOutputArray(action.value, message)
         sender.sendPluginMessage(AstraLibs.instance, BungeeMessage.BUNGEE_CHANNEL.value, out.toByteArray())
     }
 

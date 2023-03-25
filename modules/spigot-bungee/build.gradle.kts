@@ -1,6 +1,5 @@
 plugins {
     id("spigot-resource-processor")
-    id("spigot-shadow")
     id("basic-java")
 }
 
@@ -36,7 +35,4 @@ dependencies {
     implementation(project(":modules:models"))
     implementation(project(":modules:remote-api"))
     implementation(project(":modules:local-api"))
-    implementation(project(":modules:spigot-bungee"))
-    implementation(project(":modules:spigot-api"))
-    implementation(project(":modules:shared"))
 }

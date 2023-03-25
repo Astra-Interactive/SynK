@@ -1,15 +1,23 @@
 package com.astrainteractive.synk.di
 
 import com.astrainteractive.synk.api.SpigotLocalPlayerDataSource
+import com.astrainteractive.synk.api.local.LocalInventoryApi
+import com.astrainteractive.synk.api.mapping.BukkitPlayerMapper
+import com.astrainteractive.synk.api.remote.RemoteApi
 import com.astrainteractive.synk.api.remote.RemoteApiImpl
 import com.astrainteractive.synk.di.factories.DatabaseFactory
+import com.astrainteractive.synk.shared.EventController
 import com.astrainteractive.synk.models.config.PluginConfig
 import com.astrainteractive.synk.utils.Locker
 import com.astrainteractive.synk.plugin.PluginTranslation
+import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.EmpireSerializer
+import ru.astrainteractive.astralibs.di.Module
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.di.module
 import ru.astrainteractive.astralibs.di.reloadable
+import ru.astrainteractive.astralibs.utils.encoding.BukkitIOStreamProvider
+import ru.astrainteractive.astralibs.utils.encoding.Serializer
 import java.util.*
 
 object ServiceLocator {
@@ -25,12 +33,31 @@ object ServiceLocator {
     }
     val RemoteDataSourceModule = module {
         val database by databaseModule
-        RemoteApiImpl()
+        RemoteApiImpl() as RemoteApi
+    }
+    val serializer = module {
+        Serializer(BukkitIOStreamProvider)
+    }
+    val bukkitPlayerMapper = module {
+        val serializer by serializer
+        BukkitPlayerMapper(serializer)
     }
     val LocalDataSourceModule = module {
-        SpigotLocalPlayerDataSource() as SpigotLocalPlayerDataSource
+        val bukkitPlayerMapper by bukkitPlayerMapper
+        SpigotLocalPlayerDataSource(bukkitPlayerMapper) as LocalInventoryApi<ItemStack>
     }
     val uuidLockerModule = module {
         Locker<UUID>()
+    }
+
+    val eventController = module {
+        val locker by uuidLockerModule
+        val remoteDataSource by RemoteDataSourceModule
+        val localDataSource by LocalDataSourceModule
+        EventController(
+            locker = locker,
+            sqlDataSource = remoteDataSource,
+            localDataSource = localDataSource
+        )
     }
 }

@@ -1,6 +1,5 @@
 plugins {
     id("spigot-resource-processor")
-    id("spigot-shadow")
     id("basic-java")
 }
 
@@ -16,8 +15,8 @@ dependencies {
     implementation(libs.kotlin.serializationKaml)
     // AstraLibs
     implementation(libs.astralibs.ktxCore)
-    implementation(libs.astralibs.spigotCore)
-    implementation(libs.bstats.bukkit)
+//    implementation(libs.astralibs.spigotCore)
+//    implementation(libs.bstats.bukkit)
     // SQL
     implementation(libs.xerialSqliteJdbcLib)
     implementation(libs.exposed.java.time)
@@ -28,15 +27,12 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(libs.orgTesting)
     // Spigot dependencies
-    compileOnly(libs.essentialsx)
-    compileOnly(libs.paperApi)
-    compileOnly(libs.spigotApi)
-    compileOnly(libs.spigot)
+//    compileOnly(libs.essentialsx)
+//    compileOnly(libs.paperApi)
+//    compileOnly(libs.spigotApi)
+//    compileOnly(libs.spigot)
     // Local
     implementation(project(":modules:models"))
     implementation(project(":modules:remote-api"))
     implementation(project(":modules:local-api"))
-    implementation(project(":modules:spigot-bungee"))
-    implementation(project(":modules:spigot-api"))
-    implementation(project(":modules:shared"))
 }

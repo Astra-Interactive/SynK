@@ -1,8 +1,9 @@
 package com.astrainteractive.synk.api.local
 
+import com.astrainteractive.synk.models.dto.PlayerDTO
 import java.io.File
 
-interface LocalInventoryApi<PLAYER, ITEM_STACK> {
+interface LocalInventoryApi<DATA> {
     /**
      * Type of save
      */
@@ -31,20 +32,20 @@ interface LocalInventoryApi<PLAYER, ITEM_STACK> {
     /**
      * Save player inventory
      */
-    fun savePlayer(player: PLAYER, type: TYPE)
+    fun savePlayer(player: PlayerDTO, type: TYPE)
 
     /**
      * Loade previous player saves
      */
-    fun loadPlayerSaves(player: PLAYER): List<File>
+    fun loadPlayerSaves(player: PlayerDTO): List<File>
 
     /**
      * Read player inventory save
      */
-    fun readPlayerInventorySave(player: PLAYER, file: File): List<ITEM_STACK>
+    fun readPlayerInventorySave(player: PlayerDTO, file: File): List<DATA>
 
     /**
      * Read player enderchest save
      */
-    fun readPlayerEnderChestSave(player: PLAYER, file: File): List<ITEM_STACK>
+    fun readPlayerEnderChestSave(player: PlayerDTO, file: File): List<DATA>
 }

@@ -1,17 +1,20 @@
 package com.astrainteractive.synk
 
 import CommandManager
-import com.astrainteractive.synk.api.messaging.BungeeController
-import com.astrainteractive.synk.api.messaging.models.BungeeMessage
-import com.astrainteractive.synk.events.EventController
+import com.astrainteractive.synk.api.mapping.BukkitPlayerMapper
+import com.astrainteractive.synk.bungee.BungeeController
+import com.astrainteractive.synk.bungee.models.BungeeMessage
+import com.astrainteractive.synk.shared.EventController
 import com.astrainteractive.synk.events.EventHandler
 import com.astrainteractive.synk.di.Files
 import com.astrainteractive.synk.di.ServiceLocator
 import kotlinx.coroutines.runBlocking
+import org.bukkit.Bukkit
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.Logger
+import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.events.GlobalEventListener
 
 /**
@@ -44,7 +47,12 @@ class AstraSync : JavaPlugin() {
      * This method called when server is shutting down or when PlugMan disable plugin.
      */
     override fun onDisable() {
-        runBlocking { EventController.saveAllPlayers() }
+        runBlocking {
+            val eventController by ServiceLocator.eventController
+            val bukkitPlayerManager by ServiceLocator.bukkitPlayerMapper
+            val players = Bukkit.getOnlinePlayers().map(bukkitPlayerManager::toDTO)
+            eventController.saveAllPlayers(players)
+        }
         HandlerList.unregisterAll(this)
         GlobalEventListener.onDisable()
 

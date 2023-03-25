@@ -8,6 +8,7 @@ import com.astrainteractive.synk.models.dto.PlayerDTO
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.UUID
 
 class RemoteApiImpl(
     private val playerDTOMapper: PlayerDTOMapper = PlayerDTOMapperImpl
@@ -23,12 +24,12 @@ class RemoteApiImpl(
         return PlayerDAO.new(playerDTOMapper.toExposed(playerDTO)).let(playerDTOMapper::toDTO)
     }
 
-    override fun select(uuid: String): PlayerDTO? = transaction {
-        PlayerDAO.find(PlayerTable.minecraftUUID eq uuid).firstOrNull()?.let(playerDTOMapper::toDTO)
+    override fun select(uuid: UUID): PlayerDTO? = transaction {
+        PlayerDAO.find(PlayerTable.minecraftUUID eq uuid.toString()).firstOrNull()?.let(playerDTOMapper::toDTO)
     }
 
 
-    override fun delete(uuid: String): Int {
-        return PlayerTable.deleteWhere { PlayerTable.minecraftUUID eq uuid }
+    override fun delete(uuid: UUID): Int {
+        return PlayerTable.deleteWhere { PlayerTable.minecraftUUID eq uuid.toString() }
     }
 }
