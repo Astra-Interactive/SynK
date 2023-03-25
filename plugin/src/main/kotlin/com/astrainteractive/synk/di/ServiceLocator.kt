@@ -6,13 +6,12 @@ import com.astrainteractive.synk.api.mapping.BukkitPlayerMapper
 import com.astrainteractive.synk.api.remote.RemoteApi
 import com.astrainteractive.synk.api.remote.RemoteApiImpl
 import com.astrainteractive.synk.di.factories.DatabaseFactory
-import com.astrainteractive.synk.shared.EventController
 import com.astrainteractive.synk.models.config.PluginConfig
-import com.astrainteractive.synk.utils.Locker
 import com.astrainteractive.synk.plugin.PluginTranslation
+import com.astrainteractive.synk.shared.EventController
+import com.astrainteractive.synk.utils.Locker
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.EmpireSerializer
-import ru.astrainteractive.astralibs.di.Module
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.di.module
 import ru.astrainteractive.astralibs.di.reloadable

@@ -1,13 +1,11 @@
 package com.astrainteractive.synk
 
 import CommandManager
-import com.astrainteractive.synk.api.mapping.BukkitPlayerMapper
 import com.astrainteractive.synk.bungee.BungeeController
 import com.astrainteractive.synk.bungee.models.BungeeMessage
-import com.astrainteractive.synk.shared.EventController
-import com.astrainteractive.synk.events.EventHandler
 import com.astrainteractive.synk.di.Files
 import com.astrainteractive.synk.di.ServiceLocator
+import com.astrainteractive.synk.events.EventHandler
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.event.HandlerList
@@ -28,7 +26,6 @@ class AstraSync : JavaPlugin() {
     init {
         instance = this
     }
-
 
     /**
      * This method called when server starts or PlugMan load plugin.
@@ -55,7 +52,6 @@ class AstraSync : JavaPlugin() {
         }
         HandlerList.unregisterAll(this)
         GlobalEventListener.onDisable()
-
     }
 
     /**
@@ -66,7 +62,4 @@ class AstraSync : JavaPlugin() {
         ServiceLocator.translationModule.reload()
         ServiceLocator.configModule.reload()
     }
-
 }
-
-

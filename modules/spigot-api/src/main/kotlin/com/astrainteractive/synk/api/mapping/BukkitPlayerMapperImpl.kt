@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import ru.astrainteractive.astralibs.domain.mapping.Mapper
 import ru.astrainteractive.astralibs.utils.encoding.Serializer
-import ru.astrainteractive.astralibs.utils.uuid
 import java.util.*
 
 interface BukkitPlayerMapper : Mapper<Player, PlayerDTO> {

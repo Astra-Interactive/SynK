@@ -3,7 +3,6 @@ package com.astrainteractive.synk.commands
 import CommandManager
 import com.astrainteractive.synk.bungee.BungeeController
 import com.astrainteractive.synk.di.ServiceLocator
-import com.astrainteractive.synk.shared.EventController
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.commands.registerCommand
@@ -13,10 +12,12 @@ import ru.astrainteractive.astralibs.utils.withEntry
 
 fun CommandManager.tabCompleter() = AstraLibs.instance.registerTabCompleter("syncserver") {
     val config by ServiceLocator.configModule
-    if (args.isEmpty())
+    if (args.isEmpty()) {
         return@registerTabCompleter config.serverIDList.withEntry(args.last())
-    if (args.size == 1)
+    }
+    if (args.size == 1) {
         return@registerTabCompleter config.serverIDList.withEntry(args.last())
+    }
     return@registerTabCompleter listOf<String>()
 }
 
@@ -43,4 +44,3 @@ fun CommandManager.syncServer() = AstraLibs.instance.registerCommand("syncserver
         }
     )
 }
-

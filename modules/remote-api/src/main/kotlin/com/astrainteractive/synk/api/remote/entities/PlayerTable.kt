@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.Column
  * Игрок
  */
 object PlayerTable : IntIdTable() {
-    val minecraftUUID: Column<String> = varchar("minecraft_name",128).uniqueIndex()
+    val minecraftUUID: Column<String> = varchar("minecraft_name", 128).uniqueIndex()
     val experience: Column<Int> = integer("experience")
     val health: Column<Double> = double("health")
     val foodLevel: Column<Int> = integer("foodLevel")
@@ -32,4 +32,3 @@ class PlayerDAO(id: EntityID<Int>) : Entity<Int>(id) {
     var enderChestItems by PlayerTable.enderChestItems
     var effects by PlayerTable.effects
 }
-

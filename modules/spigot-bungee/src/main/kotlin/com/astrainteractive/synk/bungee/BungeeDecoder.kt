@@ -33,6 +33,4 @@ object BungeeDecoder {
         val out = createByteOutputArray(action.value, message)
         sender.sendPluginMessage(AstraLibs.instance, BungeeMessage.BUNGEE_CHANNEL.value, out.toByteArray())
     }
-
-
 }

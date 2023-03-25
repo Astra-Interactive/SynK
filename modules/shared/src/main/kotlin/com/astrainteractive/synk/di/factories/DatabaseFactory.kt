@@ -13,7 +13,6 @@ class DatabaseFactory(
     private val config: PluginConfig
 ) : Factory<Database>() {
 
-
     private val host: String
         get() = config.mysql.host
     private val port: String
@@ -29,7 +28,7 @@ class DatabaseFactory(
 
     override fun initializer(): Database {
         val db = Database.connect(
-            "jdbc:mysql://${host}:${port}/${name}",
+            "jdbc:mysql://$host:$port/$name",
             driver = driver,
             user = login,
             password = password

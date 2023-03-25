@@ -1,6 +1,5 @@
 package com.astrainteractive.synk.models.config
 
-
 /**
  * Example config file with 3 types of initialization
  */
@@ -19,5 +18,4 @@ data class PluginConfig(
         val name: String,
         val driver: String = "com.mysql.cj.jdbc.Driver",
     )
-
 }

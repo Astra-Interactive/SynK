@@ -4,7 +4,6 @@ import com.astrainteractive.synk.commands.reload
 import com.astrainteractive.synk.commands.syncServer
 import com.astrainteractive.synk.commands.tabCompleter
 
-
 /**
  * Command handler for your plugin
  * It's better to create different executors for different commands
@@ -24,6 +23,4 @@ class CommandManager {
         syncServer()
         history()
     }
-
-
 }

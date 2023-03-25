@@ -13,7 +13,11 @@ import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
-import org.bukkit.event.player.*
+import org.bukkit.event.player.PlayerDropItemEvent
+import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerMoveEvent
+import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.world.WorldSaveEvent
 import ru.astrainteractive.astralibs.async.BukkitMain
 import ru.astrainteractive.astralibs.di.getValue
@@ -31,7 +35,8 @@ class EventHandler {
                 withContext(Dispatchers.BukkitMain) {
                     playerMapper.fromDTO(it)
                 }
-            })
+            }
+        )
     }
 
     val worldSaveEvent = DSLEvent.event<WorldSaveEvent> { e ->
@@ -45,59 +50,68 @@ class EventHandler {
     }
     val onMove = DSLEvent.event<PlayerMoveEvent> { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
-        if (controller.isPlayerLocked(playerDTO))
+        if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
+        }
     }
 
     val onDamage = DSLEvent.event<EntityDamageEvent> { e ->
         val player = e.entity as? Player ?: return@event
         val playerDTO = player.let(playerMapper::toDTO)
-        if (controller.isPlayerLocked(playerDTO))
+        if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
+        }
     }
 
     val inventoryOpenEvent = DSLEvent.event<InventoryOpenEvent> { e ->
         val player = e.player as? Player ?: return@event
-        if (controller.isPlayerLocked(player.let(playerMapper::toDTO)))
+        if (controller.isPlayerLocked(player.let(playerMapper::toDTO))) {
             e.isCancelled = true
+        }
     }
 
     val dropItemEvent = DSLEvent.event<PlayerDropItemEvent> { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
-        if (controller.isPlayerLocked(playerDTO))
+        if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
+        }
     }
 
     val pickUpItemEvent = DSLEvent.event<EntityPickupItemEvent> { e ->
         val player = e.entity as? Player ?: return@event
         val playerDTO = player.let(playerMapper::toDTO)
-        if (controller.isPlayerLocked(playerDTO))
+        if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
+        }
     }
 
     val onPlayerInteract = DSLEvent.event<PlayerInteractEvent> { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
-        if (controller.isPlayerLocked(playerDTO))
+        if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
+        }
     }
 
     val onBlockPlace = DSLEvent.event<BlockPlaceEvent> { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
-        if (controller.isPlayerLocked(playerDTO))
+        if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
+        }
     }
 
     val onBlockBreak = DSLEvent.event<BlockBreakEvent> { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
-        if (controller.isPlayerLocked(playerDTO))
+        if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
+        }
     }
 
     val onInventoryClick = DSLEvent.event<InventoryClickEvent> { e ->
         val player = e.whoClicked as? Player ?: return@event
         val playerDTO = player.let(playerMapper::toDTO)
-        if (controller.isPlayerLocked(playerDTO))
+        if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
+        }
     }
 
     val onPlayerDeath = DSLEvent.event<PlayerDeathEvent> { e ->
@@ -105,6 +119,8 @@ class EventHandler {
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
             e.drops.clear()
-        } else controller.savePlayer(playerDTO, LocalInventoryApi.TYPE.DEATH)
+        } else {
+            controller.savePlayer(playerDTO, LocalInventoryApi.TYPE.DEATH)
+        }
     }
 }

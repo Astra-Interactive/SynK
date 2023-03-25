@@ -3,7 +3,6 @@ package com.astrainteractive.synk.plugin
 import ru.astrainteractive.astralibs.file_manager.FileManager
 import ru.astrainteractive.astralibs.utils.BaseTranslation
 
-
 /**
  * All translation stored here
  */
@@ -13,8 +12,7 @@ class PluginTranslation : BaseTranslation() {
      */
     override val translationFile: FileManager = FileManager("translations.yml")
 
-
-    //General
+    // General
     val prefix: String = translationValue("general.prefix", "#18dbd1[EmpireItems]")
     val reload: String = translationValue("general.reload", "#dbbb18Перезагрузка плагина")
     val reloadComplete: String =
@@ -25,7 +23,10 @@ class PluginTranslation : BaseTranslation() {
     val pleaseWait: String =
         translationValue("general.please_wait", "#db2c18Пожалуйста, подождите")
     val inventoryLossWarning: String =
-        translationValue("general.inventory_loss_warn","#db2c18Не отключайтесь! Это может привести к потери инвентаря!!")
+        translationValue(
+            "general.inventory_loss_warn",
+            "#db2c18Не отключайтесь! Это может привести к потери инвентаря!!"
+        )
     val errorOccurredInSaving: String =
         translationValue("general.error_in_saving", "#db2c18Произошла ошибка при сохранении инвентаря")
     val errorOccurredInLoading: String =
@@ -40,6 +41,8 @@ class PluginTranslation : BaseTranslation() {
         translationValue("general.message_from_discord_format", "#0ecf41%player%: &7%message%")
 
     val onlyPlayerCommand = translationValue("general.player_command", "#db2c18Эта команда только для игроков")
-    val inputServerName = translationValue("general.input_server", "#db2c18Введите название сервера, например: /syncserver SERVER_SMP")
-
+    val inputServerName = translationValue(
+        "general.input_server",
+        "#db2c18Введите название сервера, например: /syncserver SERVER_SMP"
+    )
 }

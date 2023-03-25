@@ -1,6 +1,5 @@
 package com.astrainteractive.synk.bungee
 
-
 import com.astrainteractive.synk.bungee.models.BungeeMessage
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -13,7 +12,7 @@ object BungeeController {
     var currentServer: String? = null
         private set
 
-    fun registerChannel(channel: BungeeMessage){
+    fun registerChannel(channel: BungeeMessage) {
         Bukkit.getServer().messenger.registerOutgoingPluginChannel(AstraLibs.instance, channel.value)
     }
 
