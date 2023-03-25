@@ -9,7 +9,7 @@ import com.astrainteractive.synk.di.factories.DatabaseFactory
 import com.astrainteractive.synk.models.config.PluginConfig
 import com.astrainteractive.synk.plugin.PluginTranslation
 import com.astrainteractive.synk.shared.EventController
-import com.astrainteractive.synk.utils.Locker
+import com.astrainteractive.synk.utils.ConcurrentHashMapLocker
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.EmpireSerializer
 import ru.astrainteractive.astralibs.di.getValue
@@ -46,7 +46,7 @@ object ServiceLocator {
         SpigotLocalPlayerDataSource(bukkitPlayerMapper) as LocalInventoryApi<ItemStack>
     }
     val uuidLockerModule = module {
-        Locker<UUID>()
+        ConcurrentHashMapLocker<UUID>()
     }
 
     val eventController = module {
