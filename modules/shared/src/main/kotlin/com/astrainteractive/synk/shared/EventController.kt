@@ -14,7 +14,7 @@ class EventController(
     private val sqlDataSource: RemoteApi,
     private val localDataSource: LocalInventoryApi<*>
 ) {
-    fun isPlayerLocked(player: PlayerDTO?) = runBlocking {
+    fun isPlayerLocked(player: PlayerDTO?): Boolean = runBlocking {
         locker.isLocked(player?.minecraftUUID)
     }
 
@@ -61,6 +61,5 @@ class EventController(
         localDataSource.savePlayer(player, LocalInventoryApi.TYPE.EXIT)
         sqlDataSource.insertOrUpdate(player)
         onUpdated.invoke()
-//            BungeeController.connectPlayerToServer(server, player)
     }
 }

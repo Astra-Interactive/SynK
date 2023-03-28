@@ -1,7 +1,8 @@
+package base
+
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.Database
 import ru.astrainteractive.astralibs.di.Factory
-import java.io.File
 import kotlin.test.*
 
 interface ORMTest {
@@ -21,10 +22,4 @@ interface ORMTest {
         database?.connector?.invoke()?.close()
         database = null
     }
-
-}
-
-class SQLiteTest(dbFile: String) : ORMTest {
-    override val dbFactory: Factory<Database> = SQLiteDBFactory(dbFile)
-    override var database: Database? = null
 }

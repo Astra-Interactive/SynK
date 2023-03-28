@@ -1,9 +1,5 @@
 package com.astrainteractive.synk.utils
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.util.concurrent.ConcurrentHashMap
-
 class HashSetLocker<T> : Locker<T> {
     private val set: MutableSet<T> = HashSet<T>()
     override suspend fun lock(obj: T): Boolean {

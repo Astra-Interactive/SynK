@@ -1,6 +1,5 @@
 import com.astrainteractive.synk.utils.*
 import kotlinx.coroutines.*
-import org.jetbrains.kotlin.gradle.utils.`is`
 import ru.astrainteractive.astralibs.di.Factory
 import ru.astrainteractive.astralibs.di.factory
 import java.util.*
@@ -35,7 +34,7 @@ class LockerBenchmark {
                     }
                     isEnded = true
                 }
-                while(!isEnded){
+                while (!isEnded) {
                     delay(100)
                 }
             }
@@ -47,11 +46,8 @@ class LockerBenchmark {
 
     @Test
     fun `Measure locker time`() {
-
         measureAndAssertLocker(ConcurrentHashMapLocker())
         measureAndAssertLocker(ConcurrentSkipListSetLocker())
         measureAndAssertLocker(HashSetLocker())
-
-
     }
 }

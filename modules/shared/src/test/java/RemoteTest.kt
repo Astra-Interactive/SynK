@@ -1,3 +1,5 @@
+import base.ORMTest
+import base.SQLiteTest
 import com.astrainteractive.synk.api.remote.RemoteApi
 import com.astrainteractive.synk.api.remote.RemoteApiImpl
 import com.astrainteractive.synk.api.remote.entities.PlayerTable
@@ -39,7 +41,6 @@ class RemoteTest : ORMTest by SQLiteTest("data.db") {
         transaction { SchemaUtils.create(PlayerTable) }
         api = RemoteApiImpl(database)
     }
-
 
     @Test
     fun `Insert - select - delete`(): Unit = runBlocking {
