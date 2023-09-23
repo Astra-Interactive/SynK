@@ -46,9 +46,9 @@ dependencyResolutionManagement {
 rootProject.name = "SynK"
 
 include("modules:models")
-include("modules:local-api")
-include("modules:remote-api")
+include("modules:api-local")
+include("modules:api-local-spigot")
+include("modules:api-remote")
 include("modules:spigot-bungee")
-include("modules:spigot-api")
 include("modules:shared")
 include("plugin")

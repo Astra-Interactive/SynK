@@ -25,9 +25,9 @@ dependencies {
     compileOnly(libs.minecraft.paper.api)
     // Local
     implementation(project(":modules:models"))
-    implementation(project(":modules:remote-api"))
-    implementation(project(":modules:local-api"))
+    implementation(project(":modules:api-remote"))
+    implementation(project(":modules:api-local"))
     implementation(project(":modules:spigot-bungee"))
-    implementation(project(":modules:spigot-api"))
+    implementation(project(":modules:api-local-spigot"))
     implementation(project(":modules:shared"))
 }
