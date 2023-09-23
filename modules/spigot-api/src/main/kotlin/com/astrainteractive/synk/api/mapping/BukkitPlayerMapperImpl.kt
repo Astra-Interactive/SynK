@@ -6,9 +6,8 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
-import ru.astrainteractive.astralibs.domain.mapping.Mapper
-import ru.astrainteractive.astralibs.utils.encoding.Serializer
-import java.util.*
+import ru.astrainteractive.astralibs.encoding.Serializer
+import ru.astrainteractive.klibs.mikro.core.domain.Mapper
 
 interface BukkitPlayerMapper : Mapper<Player, PlayerDTO> {
     companion object {

@@ -3,9 +3,12 @@ package com.astrainteractive.synk.bungee
 import com.astrainteractive.synk.bungee.models.BungeeMessage
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.AstraLibs
+import org.bukkit.plugin.java.JavaPlugin
 
-object BungeeController {
+class BungeeController(
+    private val plugin: JavaPlugin,
+    private val bungeeDecoder: BungeeDecoder
+) {
     var serversAndPlayers: HashMap<String, Set<String>> = HashMap()
         private set
     var servers: HashSet<String> = HashSet()
@@ -13,11 +16,11 @@ object BungeeController {
         private set
 
     fun registerChannel(channel: BungeeMessage) {
-        Bukkit.getServer().messenger.registerOutgoingPluginChannel(AstraLibs.instance, channel.value)
+        Bukkit.getServer().messenger.registerOutgoingPluginChannel(plugin, channel.value)
     }
 
     fun connectPlayerToServer(server: String, player: Player) {
-        BungeeDecoder.sendBungeeMessage(
+        bungeeDecoder.sendBungeeMessage(
             BungeeMessage.CONNECT,
             server,
             player

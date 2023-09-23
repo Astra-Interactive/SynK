@@ -1,18 +1,19 @@
-import com.astrainteractive.synk.utils.*
-import kotlinx.coroutines.*
-import ru.astrainteractive.astralibs.di.Factory
-import ru.astrainteractive.astralibs.di.factory
-import java.util.*
-import kotlin.test.*
-import kotlin.time.ExperimentalTime
+import com.astrainteractive.synk.utils.ConcurrentHashMapLocker
+import com.astrainteractive.synk.utils.ConcurrentSkipListSetLocker
+import com.astrainteractive.synk.utils.HashSetLocker
+import com.astrainteractive.synk.utils.Locker
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlin.test.Test
 import kotlin.time.measureTime
 
 class LockerBenchmark {
-    private val lockerFactory: Factory<Locker<Int>> = factory {
-        ConcurrentSkipListSetLocker<Int>()
-    }
 
-    @OptIn(ExperimentalTime::class)
     private fun measureAndAssertLocker(locker: Locker<Int>) {
         measureTime {
             var isEnded = false

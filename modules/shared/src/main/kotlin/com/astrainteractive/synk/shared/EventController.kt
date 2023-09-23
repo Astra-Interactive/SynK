@@ -5,9 +5,16 @@ import com.astrainteractive.synk.api.remote.RemoteApi
 import com.astrainteractive.synk.api.remote.exception.RemoteApiException
 import com.astrainteractive.synk.models.dto.PlayerDTO
 import com.astrainteractive.synk.utils.Locker
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.async.PluginScope
-import java.util.*
+import java.util.UUID
 
 class EventController(
     private val locker: Locker<UUID>,
@@ -18,6 +25,7 @@ class EventController(
         locker.isLocked(player?.minecraftUUID)
     }
 
+    @OptIn(UnsafeApi::class)
     private inline fun <reified T> withLock(
         uuid: UUID,
         crossinline block: suspend CoroutineScope.() -> T
@@ -46,6 +54,7 @@ class EventController(
         sqlDataSource.insertOrUpdate(player)
     }
 
+    @OptIn(UnsafeApi::class)
     fun saveAllPlayers(players: List<PlayerDTO>) = PluginScope.launch(Dispatchers.IO) {
         players.map {
             async {

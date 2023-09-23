@@ -1,16 +1,17 @@
 package com.astrainteractive.synk.plugin
 
-import ru.astrainteractive.astralibs.file_manager.FileManager
-import ru.astrainteractive.astralibs.utils.BaseTranslation
+import org.bukkit.plugin.Plugin
+import ru.astrainteractive.astralibs.filemanager.DefaultSpigotFileManager
+import ru.astrainteractive.astralibs.util.BaseTranslation
 
 /**
  * All translation stored here
  */
-class PluginTranslation : BaseTranslation() {
+class PluginTranslation(private val plugin: Plugin) : BaseTranslation() {
     /**
      * This is a default translation file. Don't forget to create translation.yml in resources of the plugin
      */
-    override val translationFile: FileManager = FileManager("translations.yml")
+    override val translationFile = DefaultSpigotFileManager(plugin, "translations.yml")
 
     // General
     val prefix: String = translationValue("general.prefix", "#18dbd1[EmpireItems]")

@@ -1,5 +1,9 @@
-group = libs.versions.group
-version = libs.versions.plugin
+buildscript {
+    dependencies {
+        classpath("ru.astrainteractive.gradleplugin:convention:0.0.10")
+        classpath("ru.astrainteractive.gradleplugin:minecraft:0.0.10")
+    }
+}
 
 plugins {
     java
@@ -7,8 +11,15 @@ plugins {
     `java-library`
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.shadow) apply false
-    alias(libs.plugins.fabricLoom) apply false
-    alias(libs.plugins.netMinecraftForge) apply false
-    id("detekt-convention")
+}
+
+apply(plugin = "ru.astrainteractive.gradleplugin.dokka.root")
+apply(plugin = "ru.astrainteractive.gradleplugin.detekt")
+apply(plugin = "ru.astrainteractive.gradleplugin.root.info")
+
+subprojects.forEach {
+    it.apply(plugin = "ru.astrainteractive.gradleplugin.dokka.module")
+    it.plugins.withId("org.jetbrains.kotlin.jvm") {
+        it.apply(plugin = "ru.astrainteractive.gradleplugin.java.core")
+    }
 }

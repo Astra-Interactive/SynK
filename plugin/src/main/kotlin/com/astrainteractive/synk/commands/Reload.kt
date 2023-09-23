@@ -1,11 +1,7 @@
 package com.astrainteractive.synk.commands
 
 import CommandManager
-import com.astrainteractive.synk.SynK
-import com.astrainteractive.synk.di.ServiceLocator
-import ru.astrainteractive.astralibs.AstraLibs
-import ru.astrainteractive.astralibs.commands.registerCommand
-import ru.astrainteractive.astralibs.di.getValue
+import ru.astrainteractive.astralibs.command.registerCommand
 
 /**
  * Reload command handler
@@ -16,9 +12,8 @@ import ru.astrainteractive.astralibs.di.getValue
  *
  * Here you should also check for permission
  */
-fun CommandManager.reload() = AstraLibs.instance.registerCommand("atempreload") {
-    val translation by ServiceLocator.translationModule
+fun CommandManager.reload() = plugin.registerCommand("atempreload") {
     sender.sendMessage(translation.reload)
-    SynK.instance.reloadPlugin()
+    plugin.reloadPlugin()
     sender.sendMessage(translation.reloadComplete)
 }

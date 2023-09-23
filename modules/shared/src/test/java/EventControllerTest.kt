@@ -9,25 +9,28 @@ import com.astrainteractive.synk.utils.HashSetLocker
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
-import ru.astrainteractive.astralibs.utils.encoding.Serializer
+import ru.astrainteractive.astralibs.encoding.IO
 import java.io.File
-import java.util.*
+import java.util.UUID
 import kotlin.random.Random
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class EventControllerTest : ORMTest by SQLiteTest("data.db") {
     private lateinit var api: RemoteApi
     private lateinit var eventController: EventController
-    private val RandomPlayerDTO: PlayerDTO
+    private val randomPlayerDTO: PlayerDTO
         get() = PlayerDTO(
             minecraftUUID = UUID.randomUUID(),
             totalExperience = Random.nextInt(0, 1024),
             health = Random.nextDouble(0.0, 20.0),
             foodLevel = Random.nextInt(0, 20),
             lastServerName = UUID.randomUUID().toString(),
-            items = Serializer.Wrapper.Base64(""),
-            enderChestItems = Serializer.Wrapper.Base64(""),
-            effects = Serializer.Wrapper.Base64(""),
+            items = IO.Base64(""),
+            enderChestItems = IO.Base64(""),
+            effects = IO.Base64(""),
         )
 
     @AfterTest
@@ -52,7 +55,7 @@ class EventControllerTest : ORMTest by SQLiteTest("data.db") {
 
     @Test
     fun `Change server`(): Unit = runBlocking {
-        val playerDTO = RandomPlayerDTO
+        val playerDTO = randomPlayerDTO
         eventController.changeServer(playerDTO) {
             eventController.loadPlayer(playerDTO) {
                 assertEquals(playerDTO, it)
@@ -62,7 +65,7 @@ class EventControllerTest : ORMTest by SQLiteTest("data.db") {
 
     @Test
     fun `Save and load player`(): Unit = runBlocking {
-        val playerDTO = RandomPlayerDTO
+        val playerDTO = randomPlayerDTO
         eventController.savePlayer(playerDTO)
         eventController.loadPlayer(playerDTO) {
             assertEquals(playerDTO, it)

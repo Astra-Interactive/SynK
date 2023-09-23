@@ -1,24 +1,16 @@
 plugins {
-    id("basic-java")
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 dependencies {
-    // Kotlin
-    implementation(libs.kotlinGradlePlugin)
     // AstraLibs
-    implementation(libs.astralibs.ktxCore)
+    implementation(libs.minecraft.astralibs.ktxcore)
     // SQL
-    implementation(libs.xerialSqliteJdbcLib)
+    implementation(libs.driver.jdbc)
     implementation(libs.exposed.java.time)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.core)
     implementation(libs.exposed.dao)
-    // Serialization
-    implementation(libs.kotlin.serialization)
-    implementation(libs.kotlin.serializationJson)
-    implementation(libs.kotlin.serializationKaml)
-    // Test
-    testImplementation(kotlin("test"))
-    testImplementation(libs.orgTesting)
     // Local
     implementation(project(":modules:models"))
 }

@@ -1,5 +1,4 @@
 pluginManagement {
-    includeBuild("build-logic")
     repositories {
         maven("https://maven.fabricmc.net/") { name = "Fabric" }
         maven("https://files.minecraftforge.net/maven")

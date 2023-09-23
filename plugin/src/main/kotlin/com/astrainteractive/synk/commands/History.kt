@@ -7,11 +7,13 @@ import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.AstraLibs
+import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.async.PluginScope
-import ru.astrainteractive.astralibs.commands.registerCommand
+import ru.astrainteractive.astralibs.command.registerCommand
 
-fun CommandManager.history() = AstraLibs.instance.registerCommand("history") {
+@OptIn(UnsafeApi::class)
+@Suppress("UnusedPrivateMember")
+fun CommandManager.history() = plugin.registerCommand("history") {
     if (!SynkPermission.History.hasPermission(sender)) {
         sender.sendMessage("No permission")
         return@registerCommand

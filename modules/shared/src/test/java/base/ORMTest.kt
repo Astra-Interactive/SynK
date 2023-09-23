@@ -2,19 +2,20 @@ package base
 
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.Database
-import ru.astrainteractive.astralibs.di.Factory
-import kotlin.test.*
+import ru.astrainteractive.klibs.kdi.Factory
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 
 interface ORMTest {
-    abstract val dbFactory: Factory<Database>
+    val dbFactory: Factory<Database>
     var database: Database?
     fun assertConnected(): Database {
-        return database ?: throw IllegalStateException("Database not connected")
+        return checkNotNull(database) { "Database not connected" }
     }
 
     @BeforeTest
     open fun setup(): Unit = runBlocking {
-        database = dbFactory.value
+        database = dbFactory.create()
     }
 
     @AfterTest

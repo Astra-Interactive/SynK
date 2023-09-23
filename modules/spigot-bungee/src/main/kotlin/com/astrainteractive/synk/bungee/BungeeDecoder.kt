@@ -4,10 +4,10 @@ import com.astrainteractive.synk.bungee.models.BungeeMessage
 import com.google.common.io.ByteArrayDataOutput
 import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit
+import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.plugin.messaging.PluginMessageRecipient
-import ru.astrainteractive.astralibs.AstraLibs
 
-object BungeeDecoder {
+class BungeeDecoder(private val plugin: JavaPlugin) {
 
     private val anyPlayerMessageRecipient: PluginMessageRecipient?
         get() = Bukkit.getOnlinePlayers().firstOrNull()
@@ -31,6 +31,6 @@ object BungeeDecoder {
         sender: PluginMessageRecipient = defaultMessageRecipient,
     ) {
         val out = createByteOutputArray(action.value, message)
-        sender.sendPluginMessage(AstraLibs.instance, BungeeMessage.BUNGEE_CHANNEL.value, out.toByteArray())
+        sender.sendPluginMessage(plugin, BungeeMessage.BUNGEE_CHANNEL.value, out.toByteArray())
     }
 }

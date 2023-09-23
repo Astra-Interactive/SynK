@@ -1,8 +1,8 @@
 package com.astrainteractive.synk.api.remote.exception
 
-sealed class RemoteApiException : Exception() {
+sealed class RemoteApiException : Throwable() {
 
-    object PlayerNotFoundException : RemoteApiException()
-    object PlayerLockedException : RemoteApiException()
-    object PlayerDataNotExists : RemoteApiException()
+    data object PlayerNotFoundException : RemoteApiException()
+    data object PlayerLockedException : RemoteApiException()
+    data object PlayerDataNotExists : RemoteApiException()
 }

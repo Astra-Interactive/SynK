@@ -1,6 +1,6 @@
 package com.astrainteractive.synk.models.dto
 
-import ru.astrainteractive.astralibs.utils.encoding.Serializer
+import ru.astrainteractive.astralibs.encoding.IO
 import java.util.UUID
 
 data class PlayerDTO(
@@ -9,7 +9,7 @@ data class PlayerDTO(
     val health: Double,
     val foodLevel: Int,
     val lastServerName: String,
-    val items: Serializer.Wrapper.Base64,
-    val enderChestItems: Serializer.Wrapper.Base64,
-    val effects: Serializer.Wrapper.Base64
+    val items: IO.Base64,
+    val enderChestItems: IO.Base64,
+    val effects: IO.Base64
 )

@@ -1,9 +1,9 @@
 package com.astrainteractive.synk.plugin
 
-import ru.astrainteractive.astralibs.utils.Permission
+import ru.astrainteractive.astralibs.util.Permission
 
 sealed class SynkPermission(override val value: String) : Permission {
-    object Reload : SynkPermission("synk.reload")
+    data object Reload : SynkPermission("synk.reload")
     class Server(server: String) : SynkPermission("synk.server.$server")
-    object History : SynkPermission("synk.history")
+    data object History : SynkPermission("synk.history")
 }

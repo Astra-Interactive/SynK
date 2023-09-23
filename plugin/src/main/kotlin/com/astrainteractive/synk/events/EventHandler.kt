@@ -1,8 +1,7 @@
 package com.astrainteractive.synk.events
 
 import com.astrainteractive.synk.api.local.LocalInventoryApi
-import com.astrainteractive.synk.di.ServiceLocator
-import kotlinx.coroutines.Dispatchers
+import com.astrainteractive.synk.events.di.EventModule
 import kotlinx.coroutines.withContext
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -19,102 +18,99 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.world.WorldSaveEvent
-import ru.astrainteractive.astralibs.async.BukkitMain
-import ru.astrainteractive.astralibs.di.getValue
-import ru.astrainteractive.astralibs.events.DSLEvent
+import ru.astrainteractive.astralibs.event.DSLEvent
+import ru.astrainteractive.klibs.kdi.getValue
 
-class EventHandler {
-    private val controller by ServiceLocator.eventController
-    private val playerMapper by ServiceLocator.bukkitPlayerMapper
+class EventHandler(module: EventModule) : EventModule by module {
 
-    val onPlayerJoin = DSLEvent.event<PlayerJoinEvent> { e ->
+    val onPlayerJoin = DSLEvent<PlayerJoinEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
         controller.loadPlayer(
             player = playerDTO,
             onLoaded = {
-                withContext(Dispatchers.BukkitMain) {
+                withContext(dispatch.BukkitMain) {
                     playerMapper.fromDTO(it)
                 }
             }
         )
     }
 
-    val worldSaveEvent = DSLEvent.event<WorldSaveEvent> { e ->
+    val worldSaveEvent = DSLEvent<WorldSaveEvent>(eventListener, plugin) { e ->
         val players = Bukkit.getOnlinePlayers().map(playerMapper::toDTO)
         controller.saveAllPlayers(players)
     }
 
-    val onPlayerLeave = DSLEvent.event<PlayerQuitEvent> { e ->
+    val onPlayerLeave = DSLEvent<PlayerQuitEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
         controller.savePlayer(playerDTO)
     }
-    val onMove = DSLEvent.event<PlayerMoveEvent> { e ->
+    val onMove = DSLEvent<PlayerMoveEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
         }
     }
 
-    val onDamage = DSLEvent.event<EntityDamageEvent> { e ->
-        val player = e.entity as? Player ?: return@event
+    val onDamage = DSLEvent<EntityDamageEvent>(eventListener, plugin) { e ->
+        val player = e.entity as? Player ?: return@DSLEvent
         val playerDTO = player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
         }
     }
 
-    val inventoryOpenEvent = DSLEvent.event<InventoryOpenEvent> { e ->
-        val player = e.player as? Player ?: return@event
+    val inventoryOpenEvent = DSLEvent<InventoryOpenEvent>(eventListener, plugin) { e ->
+        val player = e.player as? Player ?: return@DSLEvent
         if (controller.isPlayerLocked(player.let(playerMapper::toDTO))) {
             e.isCancelled = true
         }
     }
 
-    val dropItemEvent = DSLEvent.event<PlayerDropItemEvent> { e ->
+    val dropItemEvent = DSLEvent<PlayerDropItemEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
         }
     }
 
-    val pickUpItemEvent = DSLEvent.event<EntityPickupItemEvent> { e ->
-        val player = e.entity as? Player ?: return@event
+    val pickUpItemEvent = DSLEvent<EntityPickupItemEvent>(eventListener, plugin) { e ->
+        val player = e.entity as? Player ?: return@DSLEvent
         val playerDTO = player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
         }
     }
 
-    val onPlayerInteract = DSLEvent.event<PlayerInteractEvent> { e ->
+    val onPlayerInteract = DSLEvent<PlayerInteractEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
         }
     }
 
-    val onBlockPlace = DSLEvent.event<BlockPlaceEvent> { e ->
+    val onBlockPlace = DSLEvent<BlockPlaceEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
         }
     }
 
-    val onBlockBreak = DSLEvent.event<BlockBreakEvent> { e ->
+    val onBlockBreak = DSLEvent<BlockBreakEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
         }
     }
 
-    val onInventoryClick = DSLEvent.event<InventoryClickEvent> { e ->
-        val player = e.whoClicked as? Player ?: return@event
+    val onInventoryClick = DSLEvent<InventoryClickEvent>(eventListener, plugin) { e ->
+        val player = e.whoClicked as? Player ?: return@DSLEvent
         val playerDTO = player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true
         }
     }
 
-    val onPlayerDeath = DSLEvent.event<PlayerDeathEvent> { e ->
+    val onPlayerDeath = DSLEvent<PlayerDeathEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)
         if (controller.isPlayerLocked(playerDTO)) {
             e.isCancelled = true

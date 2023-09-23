@@ -7,11 +7,11 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.vendors.MariaDBDialect
 import org.jetbrains.exposed.sql.vendors.MysqlDialect
-import ru.astrainteractive.astralibs.di.Factory
+import ru.astrainteractive.klibs.kdi.Factory
 
 class DatabaseFactory(
     private val config: PluginConfig
-) : Factory<Database>() {
+) : Factory<Database> {
 
     private val host: String
         get() = config.mysql.host
@@ -26,7 +26,7 @@ class DatabaseFactory(
     private val driver: String
         get() = config.mysql.driver
 
-    override fun initializer(): Database {
+    override fun create(): Database {
         val db = Database.connect(
             "jdbc:mysql://$host:$port/$name",
             driver = driver,

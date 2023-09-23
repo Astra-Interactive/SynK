@@ -2,9 +2,9 @@ package com.astrainteractive.synk.api.remote.mapping
 
 import com.astrainteractive.synk.api.remote.entities.PlayerDAO
 import com.astrainteractive.synk.models.dto.PlayerDTO
-import ru.astrainteractive.astralibs.domain.mapping.Mapper
-import ru.astrainteractive.astralibs.utils.encoding.Serializer
-import java.util.*
+import ru.astrainteractive.astralibs.encoding.IO
+import ru.astrainteractive.klibs.mikro.core.domain.Mapper
+import java.util.UUID
 
 interface PlayerDTOMapper : Mapper<PlayerDAO, PlayerDTO>, ExposedMapper<PlayerDAO, PlayerDTO>
 
@@ -16,9 +16,9 @@ object PlayerDTOMapperImpl : PlayerDTOMapper {
             health = it.health,
             foodLevel = it.foodLevel,
             lastServerName = it.lastServerName,
-            items = Serializer.Wrapper.Base64(it.items),
-            enderChestItems = Serializer.Wrapper.Base64(it.enderChestItems),
-            effects = Serializer.Wrapper.Base64(it.effects)
+            items = IO.Base64(it.items),
+            enderChestItems = IO.Base64(it.enderChestItems),
+            effects = IO.Base64(it.effects)
         )
     }
 

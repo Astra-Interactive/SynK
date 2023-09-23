@@ -5,10 +5,10 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.vendors.MysqlDialect
-import ru.astrainteractive.astralibs.di.Factory
+import ru.astrainteractive.klibs.kdi.Factory
 
-class SQLiteDBFactory(private val file: String) : Factory<Database>() {
-    override fun initializer(): Database {
+class SQLiteDBFactory(private val file: String) : Factory<Database> {
+    override fun create(): Database {
         val db = Database.connect("jdbc:sqlite:$file", "org.sqlite.JDBC")
 
         Database.registerDialect("mysql") { MysqlDialect() }
