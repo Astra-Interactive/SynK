@@ -1,4 +1,4 @@
-import com.astrainteractive.synk.commands.di.CommandModule
+import com.astrainteractive.synk.commands.di.CommandContainer
 import com.astrainteractive.synk.commands.history
 import com.astrainteractive.synk.commands.reload
 import com.astrainteractive.synk.commands.syncServer
@@ -9,7 +9,7 @@ import com.astrainteractive.synk.commands.tabCompleter
  * It's better to create different executors for different commands
  * @see Reload
  */
-class CommandManager(module: CommandModule) : CommandModule by module {
+class CommandManager(container: CommandContainer) : CommandContainer by container {
     /**
      * Here you should declare commands for your plugin
      *

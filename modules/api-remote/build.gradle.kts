@@ -12,5 +12,5 @@ dependencies {
     implementation(libs.exposed.core)
     implementation(libs.exposed.dao)
     // Local
-    implementation(project(":modules:models"))
+    implementation(projects.modules.models)
 }

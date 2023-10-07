@@ -7,7 +7,7 @@ import com.astrainteractive.synk.models.config.PluginConfig
 import com.astrainteractive.synk.plugin.PluginTranslation
 import com.astrainteractive.synk.shared.EventController
 
-interface CommandModule {
+interface CommandContainer {
     val plugin: SynK
     val translation: PluginTranslation
     val config: PluginConfig

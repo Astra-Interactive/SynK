@@ -1,6 +1,6 @@
 package com.astrainteractive.synk.api.mapping
 
-import com.astrainteractive.synk.api.remote.exception.RemoteApiException
+import com.astrainteractive.synk.api.exception.ApiLocalException
 import com.astrainteractive.synk.models.dto.PlayerDTO
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -32,7 +32,7 @@ internal class BukkitPlayerMapperImpl(
     )
 
     override fun fromDTO(it: PlayerDTO): Player {
-        val player = Bukkit.getPlayer(it.minecraftUUID) ?: throw RemoteApiException.PlayerNotFoundException
+        val player = Bukkit.getPlayer(it.minecraftUUID) ?: throw ApiLocalException.PlayerNotFoundException
         player.totalExperience = it.totalExperience
         player.health = it.health
         player.foodLevel = it.foodLevel

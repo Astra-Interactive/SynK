@@ -1,13 +1,12 @@
 buildscript {
     dependencies {
-        classpath("ru.astrainteractive.gradleplugin:convention:0.0.10")
-        classpath("ru.astrainteractive.gradleplugin:minecraft:0.0.10")
+        classpath("ru.astrainteractive.gradleplugin:convention:0.3.2")
+        classpath("ru.astrainteractive.gradleplugin:minecraft:0.3.2")
     }
 }
 
 plugins {
     java
-    `maven-publish`
     `java-library`
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false

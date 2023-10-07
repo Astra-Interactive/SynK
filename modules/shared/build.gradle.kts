@@ -22,7 +22,7 @@ dependencies {
     // Test
     testImplementation(kotlin("test"))
     // Local
-    implementation(project(":modules:models"))
-    implementation(project(":modules:api-remote"))
-    implementation(project(":modules:api-local"))
+    implementation(projects.modules.models)
+    implementation(projects.modules.apiRemote)
+    implementation(projects.modules.apiLocal)
 }

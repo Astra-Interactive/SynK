@@ -1,8 +1,8 @@
 import base.ORMTest
 import base.SQLiteTest
 import com.astrainteractive.synk.api.remote.RemoteApi
-import com.astrainteractive.synk.api.remote.RemoteApiImpl
 import com.astrainteractive.synk.api.remote.entities.PlayerTable
+import com.astrainteractive.synk.api.remote.impl.RemoteApiImpl
 import com.astrainteractive.synk.models.dto.PlayerDTO
 import com.astrainteractive.synk.shared.EventController
 import com.astrainteractive.synk.utils.HashSetLocker

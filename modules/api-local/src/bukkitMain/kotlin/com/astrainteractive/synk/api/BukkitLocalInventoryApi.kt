@@ -8,9 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.filemanager.DefaultSpigotFileManager
 import java.io.File
 
-class SpigotLocalPlayerDataSource(
+class BukkitLocalInventoryApi(
     private val plugin: JavaPlugin,
-    val bukkitPlayerMapper: BukkitPlayerMapper
+    private val bukkitPlayerMapper: BukkitPlayerMapper
 ) : LocalInventoryApi<ItemStack> {
 
     override fun savePlayer(player: PlayerDTO, type: LocalInventoryApi.TYPE) {

@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.di.factories
+package com.astrainteractive.synk.api.remote.di.factory
 
 import com.astrainteractive.synk.api.remote.entities.PlayerTable
 import com.astrainteractive.synk.models.config.PluginConfig
@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.vendors.MariaDBDialect
 import org.jetbrains.exposed.sql.vendors.MysqlDialect
 import ru.astrainteractive.klibs.kdi.Factory
 
-class DatabaseFactory(
+internal class DatabaseFactory(
     private val config: PluginConfig
 ) : Factory<Database> {
 

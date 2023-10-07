@@ -8,7 +8,7 @@ import java.util.UUID
 
 interface PlayerDTOMapper : Mapper<PlayerDAO, PlayerDTO>, ExposedMapper<PlayerDAO, PlayerDTO>
 
-object PlayerDTOMapperImpl : PlayerDTOMapper {
+internal object PlayerDTOMapperImpl : PlayerDTOMapper {
     override fun toDTO(it: PlayerDAO): PlayerDTO {
         return PlayerDTO(
             minecraftUUID = UUID.fromString(it.minecraftUUID),

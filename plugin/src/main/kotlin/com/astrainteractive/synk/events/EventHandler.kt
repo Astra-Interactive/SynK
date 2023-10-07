@@ -1,7 +1,7 @@
 package com.astrainteractive.synk.events
 
 import com.astrainteractive.synk.api.local.LocalInventoryApi
-import com.astrainteractive.synk.events.di.EventModule
+import com.astrainteractive.synk.events.di.EventContainer
 import kotlinx.coroutines.withContext
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -19,9 +19,8 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.world.WorldSaveEvent
 import ru.astrainteractive.astralibs.event.DSLEvent
-import ru.astrainteractive.klibs.kdi.getValue
 
-class EventHandler(module: EventModule) : EventModule by module {
+class EventHandler(container: EventContainer) : EventContainer by container {
 
     val onPlayerJoin = DSLEvent<PlayerJoinEvent>(eventListener, plugin) { e ->
         val playerDTO = e.player.let(playerMapper::toDTO)

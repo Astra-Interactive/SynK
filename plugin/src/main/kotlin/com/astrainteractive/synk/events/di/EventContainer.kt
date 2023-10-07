@@ -5,9 +5,8 @@ import com.astrainteractive.synk.api.mapping.BukkitPlayerMapper
 import com.astrainteractive.synk.shared.EventController
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astralibs.event.EventListener
-import ru.astrainteractive.klibs.kdi.getValue
 
-interface EventModule {
+interface EventContainer {
     val controller: EventController
     val playerMapper: BukkitPlayerMapper
     val eventListener: EventListener

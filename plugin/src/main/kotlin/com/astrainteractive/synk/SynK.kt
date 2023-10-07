@@ -1,7 +1,11 @@
 package com.astrainteractive.synk
 
+import CommandManager
 import com.astrainteractive.synk.bungee.models.BungeeMessage
-import com.astrainteractive.synk.di.RootModuleImpl
+import com.astrainteractive.synk.di.impl.CommandContainerImpl
+import com.astrainteractive.synk.di.impl.EventContainerImpl
+import com.astrainteractive.synk.di.impl.RootModuleImpl
+import com.astrainteractive.synk.events.EventHandler
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.event.HandlerList
@@ -11,17 +15,16 @@ import org.bukkit.plugin.java.JavaPlugin
  * Initial class for your plugin
  */
 class SynK : JavaPlugin() {
-    private val rootModule = RootModuleImpl
+    private val rootModule = RootModuleImpl()
 
     /**
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
         reloadPlugin()
-        rootModule.databaseModule.value
-        rootModule.eventHandler.value
-        rootModule.commandManager.value
-        rootModule.bungeeController.value.registerChannel(BungeeMessage.BUNGEE_CHANNEL)
+        EventHandler(EventContainerImpl(rootModule))
+        CommandManager(CommandContainerImpl(rootModule))
+        rootModule.spigotBungeeModule.bungeeController.value.registerChannel(BungeeMessage.BUNGEE_CHANNEL)
     }
 
     /**
@@ -29,18 +32,21 @@ class SynK : JavaPlugin() {
      */
     override fun onDisable() {
         runBlocking {
-            val players = Bukkit.getOnlinePlayers().map(rootModule.bukkitPlayerMapper.value::toDTO)
-            rootModule.eventController.value.saveAllPlayers(players)
+            val players = Bukkit.getOnlinePlayers().map(rootModule.apiLocalModule.bukkitPlayerMapper::toDTO)
+
+            rootModule.sharedModule.eventController.saveAllPlayers(players)
         }
         HandlerList.unregisterAll(this)
-        rootModule.rootEventListener.value.onDisable()
+        rootModule.pluginModule.eventListener.value.onDisable()
     }
 
     /**
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        rootModule.translationModule.reload()
-        rootModule.configModule.reload()
+        with(rootModule.pluginModule) {
+            translation.reload()
+            pluginConfig.reload()
+        }
     }
 }

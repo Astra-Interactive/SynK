@@ -1,5 +1,6 @@
-package com.astrainteractive.synk.api.remote
+package com.astrainteractive.synk.api.remote.impl
 
+import com.astrainteractive.synk.api.remote.RemoteApi
 import com.astrainteractive.synk.api.remote.entities.PlayerDAO
 import com.astrainteractive.synk.api.remote.entities.PlayerTable
 import com.astrainteractive.synk.api.remote.mapping.PlayerDTOMapper

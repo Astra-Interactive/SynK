@@ -1,7 +1,13 @@
+import ru.astrainteractive.gradleplugin.setupSpigotProcessor
+import ru.astrainteractive.gradleplugin.setupSpigotShadow
+import ru.astrainteractive.gradleplugin.sourceset.JvmSourceSetExt.bukkitMain
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 }
+
+evaluationDependsOn(":modules:api-local")
 
 dependencies {
     // Coroutines
@@ -24,10 +30,16 @@ dependencies {
     // Spigot dependencies
     compileOnly(libs.minecraft.paper.api)
     // Local
-    implementation(project(":modules:models"))
-    implementation(project(":modules:api-remote"))
-    implementation(project(":modules:api-local"))
-    implementation(project(":modules:spigot-bungee"))
-    implementation(project(":modules:api-local-spigot"))
-    implementation(project(":modules:shared"))
+    implementation(projects.modules.models)
+    implementation(projects.modules.apiRemote)
+    implementation(projects.modules.apiLocal.bukkitMain)
+    implementation(projects.modules.apiLocal)
+    implementation(projects.modules.spigotBungee)
+    implementation(projects.modules.shared)
 }
+
+File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\anarchy\\plugins").let { file ->
+    if (file.exists()) setupSpigotShadow(file) else setupSpigotShadow()
+}
+
+setupSpigotProcessor()
