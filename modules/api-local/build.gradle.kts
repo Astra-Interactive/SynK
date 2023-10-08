@@ -1,20 +1,20 @@
-import ru.astrainteractive.gradleplugin.sourceset.JvmSourceSet.Companion.configureAstraSourceSet
+@file:Suppress("UnusedPrivateMember")
 
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
+    id("ru.astrainteractive.gradleplugin.minecraft.multiplatform")
 }
 
-configureAstraSourceSet("bukkit")
-
-dependencies {
-    // AstraLibs
-    implementation(libs.minecraft.astralibs.ktxcore)
-    "bukkitMainCompileOnly"(libs.minecraft.astralibs.spigot.core)
-    // Spigot dependencies
-    "bukkitMainCompileOnly"(libs.minecraft.paper.api)
-    // Local
-    implementation(projects.modules.models)
+minecraftMultiplatform {
+    bukkit()
+    dependencies {
+        // AstraLibs
+        implementation(libs.minecraft.astralibs.ktxcore)
+        // Local
+        implementation(projects.modules.models)
+        // Bukkit
+        "bukkitMainCompileOnly"(libs.minecraft.astralibs.spigot.core)
+        "bukkitMainCompileOnly"(libs.minecraft.paper.api)
+    }
 }
-
-println("APILOCALSETS: ${sourceSets.names}")
