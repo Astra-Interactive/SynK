@@ -1,8 +1,8 @@
 package com.astrainteractive.synk
 
 import CommandManager
-import com.astrainteractive.synk.bungee.models.BungeeMessage
-import com.astrainteractive.synk.commands.di.CommandContainer
+import com.astrainteractive.synk.bungee.model.BungeeMessage
+import com.astrainteractive.synk.command.di.CommandContainer
 import com.astrainteractive.synk.di.RootModule
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit

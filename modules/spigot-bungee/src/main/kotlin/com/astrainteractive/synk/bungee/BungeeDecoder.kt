@@ -1,6 +1,6 @@
 package com.astrainteractive.synk.bungee
 
-import com.astrainteractive.synk.bungee.models.BungeeMessage
+import com.astrainteractive.synk.bungee.model.BungeeMessage
 import com.google.common.io.ByteArrayDataOutput
 import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit

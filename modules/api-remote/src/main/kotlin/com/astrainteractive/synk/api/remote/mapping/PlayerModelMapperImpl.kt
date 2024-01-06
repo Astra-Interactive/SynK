@@ -1,6 +1,6 @@
 package com.astrainteractive.synk.api.remote.mapping
 
-import com.astrainteractive.synk.api.remote.entities.PlayerDAO
+import com.astrainteractive.synk.api.remote.entity.PlayerDAO
 import ru.astrainteractive.astralibs.encoding.IO
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
 import ru.astrainteractive.synk.core.model.PlayerModel

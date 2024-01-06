@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.bungee.models
+package com.astrainteractive.synk.bungee.model
 
 enum class BungeeMessage(val value: String) {
     CONNECT("Connect"),

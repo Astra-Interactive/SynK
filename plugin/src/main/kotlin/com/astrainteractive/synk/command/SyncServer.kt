@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.commands
+package com.astrainteractive.synk.command
 
 import CommandManager
 import org.bukkit.entity.Player

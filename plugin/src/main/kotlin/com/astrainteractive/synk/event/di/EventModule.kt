@@ -1,7 +1,7 @@
-package com.astrainteractive.synk.events.di
+package com.astrainteractive.synk.event.di
 
 import com.astrainteractive.synk.di.RootModule
-import com.astrainteractive.synk.events.EventHandler
+import com.astrainteractive.synk.event.EventHandler
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.klibs.kdi.Factory

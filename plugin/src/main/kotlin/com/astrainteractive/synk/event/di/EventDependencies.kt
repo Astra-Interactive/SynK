@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.events.di
+package com.astrainteractive.synk.event.di
 
 import com.astrainteractive.synk.SynK
 import com.astrainteractive.synk.api.local.loader.PlayerLoader

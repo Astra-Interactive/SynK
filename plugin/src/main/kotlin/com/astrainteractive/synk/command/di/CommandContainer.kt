@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.commands.di
+package com.astrainteractive.synk.command.di
 
 import com.astrainteractive.synk.SynK
 import com.astrainteractive.synk.api.local.mapping.BukkitPlayerMapper

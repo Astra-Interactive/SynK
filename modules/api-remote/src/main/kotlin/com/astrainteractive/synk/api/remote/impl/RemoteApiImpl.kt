@@ -1,8 +1,8 @@
 package com.astrainteractive.synk.api.remote.impl
 
 import com.astrainteractive.synk.api.remote.RemoteApi
-import com.astrainteractive.synk.api.remote.entities.PlayerDAO
-import com.astrainteractive.synk.api.remote.entities.PlayerTable
+import com.astrainteractive.synk.api.remote.entity.PlayerDAO
+import com.astrainteractive.synk.api.remote.entity.PlayerTable
 import com.astrainteractive.synk.api.remote.mapping.PlayerModelMapper
 import com.astrainteractive.synk.api.remote.mapping.PlayerModelMapperImpl
 import org.jetbrains.exposed.sql.Database

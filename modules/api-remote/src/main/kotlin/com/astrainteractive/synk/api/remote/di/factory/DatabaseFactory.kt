@@ -1,6 +1,6 @@
 package com.astrainteractive.synk.api.remote.di.factory
 
-import com.astrainteractive.synk.api.remote.entities.PlayerTable
+import com.astrainteractive.synk.api.remote.entity.PlayerTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction

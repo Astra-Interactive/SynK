@@ -1,8 +1,8 @@
-import com.astrainteractive.synk.commands.di.CommandContainer
-import com.astrainteractive.synk.commands.history
-import com.astrainteractive.synk.commands.reload
-import com.astrainteractive.synk.commands.syncServer
-import com.astrainteractive.synk.commands.tabCompleter
+import com.astrainteractive.synk.command.di.CommandContainer
+import com.astrainteractive.synk.command.history
+import com.astrainteractive.synk.command.reload
+import com.astrainteractive.synk.command.syncServer
+import com.astrainteractive.synk.command.tabCompleter
 import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 

@@ -1,7 +1,7 @@
-package com.astrainteractive.synk.events
+package com.astrainteractive.synk.event
 
 import com.astrainteractive.synk.api.local.LocalInventoryApi
-import com.astrainteractive.synk.events.di.EventDependencies
+import com.astrainteractive.synk.event.di.EventDependencies
 import kotlinx.coroutines.withContext
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player

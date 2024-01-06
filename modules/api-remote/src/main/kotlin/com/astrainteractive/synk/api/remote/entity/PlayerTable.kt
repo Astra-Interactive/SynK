@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.api.remote.entities
+package com.astrainteractive.synk.api.remote.entity
 
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass

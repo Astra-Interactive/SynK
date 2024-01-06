@@ -1,6 +1,6 @@
 package com.astrainteractive.synk.bungee
 
-import com.astrainteractive.synk.bungee.models.BungeeMessage
+import com.astrainteractive.synk.bungee.model.BungeeMessage
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin

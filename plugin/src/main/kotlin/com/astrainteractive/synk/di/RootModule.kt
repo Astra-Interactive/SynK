@@ -3,7 +3,7 @@ package com.astrainteractive.synk.di
 import com.astrainteractive.synk.api.local.di.BukkitApiLocalModule
 import com.astrainteractive.synk.api.remote.di.ApiRemoteModule
 import com.astrainteractive.synk.bungee.di.SpigotBungeeModule
-import com.astrainteractive.synk.events.di.EventModule
+import com.astrainteractive.synk.event.di.EventModule
 import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.encoding.BukkitIOStreamProvider
 import ru.astrainteractive.astralibs.encoding.Encoder
