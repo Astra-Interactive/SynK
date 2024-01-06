@@ -1,6 +1,9 @@
+package com.astrainteractive.synk.shared
+
+import com.astrainteractive.synk.api.local.MockLocalInventoryApi
 import com.astrainteractive.synk.api.remote.RemoteApi
+import com.astrainteractive.synk.api.remote.di.MockApiRemoteModule
 import com.astrainteractive.synk.locker.HashSetLocker
-import com.astrainteractive.synk.shared.EventController
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.encoding.IO
 import ru.astrainteractive.klibs.mikro.core.dispatchers.DefaultKotlinDispatchers
@@ -33,7 +36,7 @@ class EventControllerTest {
         eventController = EventController(
             locker = HashSetLocker(),
             sqlDataSource = api,
-            localDataSource = MockInventoryAPI,
+            localDataSource = MockLocalInventoryApi,
             dispatchers = DefaultKotlinDispatchers
         )
     }

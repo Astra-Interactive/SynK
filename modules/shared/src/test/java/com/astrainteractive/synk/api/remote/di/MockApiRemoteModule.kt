@@ -1,4 +1,5 @@
-import com.astrainteractive.synk.api.remote.di.ApiRemoteModule
+package com.astrainteractive.synk.api.remote.di
+
 import ru.astrainteractive.synk.core.PluginConfig
 import java.io.File
 

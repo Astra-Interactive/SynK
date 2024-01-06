@@ -1,8 +1,9 @@
-import com.astrainteractive.synk.api.local.LocalInventoryApi
+package com.astrainteractive.synk.api.local
+
 import ru.astrainteractive.synk.core.model.PlayerModel
 import java.io.File
 
-internal object MockInventoryAPI : LocalInventoryApi<Unit> {
+internal object MockLocalInventoryApi : LocalInventoryApi<Unit> {
     override fun savePlayer(playerModel: PlayerModel, type: LocalInventoryApi.TYPE) {
         Unit
     }

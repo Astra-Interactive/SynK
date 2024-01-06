@@ -1,4 +1,5 @@
-
+package com.astrainteractive.synk.api.remote
+import com.astrainteractive.synk.api.remote.di.MockApiRemoteModule
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.encoding.IO
 import ru.astrainteractive.synk.core.model.PlayerModel
@@ -8,7 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class RemoteTest {
+class RemoteApiTest {
     private val randomPlayerModel: PlayerModel
         get() = PlayerModel(
             minecraftUUID = UUID.randomUUID(),
