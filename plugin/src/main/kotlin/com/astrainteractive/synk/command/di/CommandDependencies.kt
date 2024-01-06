@@ -10,7 +10,7 @@ import ru.astrainteractive.klibs.kdi.getValue
 import ru.astrainteractive.synk.core.PluginConfig
 import ru.astrainteractive.synk.core.PluginTranslation
 
-interface CommandContainer {
+interface CommandDependencies {
     val plugin: SynK
     val translation: PluginTranslation
     val config: PluginConfig
@@ -19,7 +19,7 @@ interface CommandContainer {
     val bungeeController: BungeeController
     val scope: CoroutineScope
 
-    class Default(rootModule: RootModule) : CommandContainer {
+    class Default(rootModule: RootModule) : CommandDependencies {
         override val plugin: SynK by rootModule.pluginModule.plugin
         override val translation: PluginTranslation by rootModule.coreModule.translation
         override val config: PluginConfig by rootModule.coreModule.configurationModule

@@ -2,7 +2,7 @@ package com.astrainteractive.synk
 
 import CommandManager
 import com.astrainteractive.synk.bungee.model.BungeeMessage
-import com.astrainteractive.synk.command.di.CommandContainer
+import com.astrainteractive.synk.command.di.CommandDependencies
 import com.astrainteractive.synk.di.RootModule
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
@@ -19,7 +19,8 @@ class SynK : JavaPlugin(), Lifecycle {
         get() = listOf(
             rootModule.coreModule.lifecycle,
             rootModule.apiRemoteModule.lifecycle,
-            rootModule.eventModule.lifecycle
+            rootModule.eventModule.lifecycle,
+            rootModule.commandModule.lifecycle
         )
 
     /**
@@ -27,7 +28,7 @@ class SynK : JavaPlugin(), Lifecycle {
      */
     override fun onEnable() {
         reloadPlugin()
-        CommandManager(CommandContainer.Default(rootModule))
+        CommandManager(CommandDependencies.Default(rootModule))
         rootModule.spigotBungeeModule.bungeeController.value.registerChannel(BungeeMessage.BUNGEE_CHANNEL)
         lifecycles.forEach(Lifecycle::onEnable)
     }

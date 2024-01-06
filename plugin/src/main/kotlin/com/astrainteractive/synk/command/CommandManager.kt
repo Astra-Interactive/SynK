@@ -1,4 +1,4 @@
-import com.astrainteractive.synk.command.di.CommandContainer
+import com.astrainteractive.synk.command.di.CommandDependencies
 import com.astrainteractive.synk.command.history
 import com.astrainteractive.synk.command.reload
 import com.astrainteractive.synk.command.syncServer
@@ -11,8 +11,8 @@ import ru.astrainteractive.astralibs.string.BukkitTranslationContext
  * It's better to create different executors for different commands
  * @see Reload
  */
-class CommandManager(container: CommandContainer) :
-    CommandContainer by container,
+class CommandManager(dependencies: CommandDependencies) :
+    CommandDependencies by dependencies,
     BukkitTranslationContext by BukkitTranslationContext.Default({ KyoriComponentSerializer.Legacy }) {
     /**
      * Here you should declare commands for your plugin
