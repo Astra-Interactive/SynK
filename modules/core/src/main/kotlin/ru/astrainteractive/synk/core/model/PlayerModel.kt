@@ -3,7 +3,7 @@ package ru.astrainteractive.synk.core.model
 import ru.astrainteractive.astralibs.encoding.IO
 import java.util.UUID
 
-data class PlayerDTO(
+data class PlayerModel(
     val minecraftUUID: UUID,
     val totalExperience: Int,
     val health: Double,

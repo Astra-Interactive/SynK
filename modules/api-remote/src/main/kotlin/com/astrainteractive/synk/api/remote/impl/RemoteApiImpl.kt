@@ -3,36 +3,36 @@ package com.astrainteractive.synk.api.remote.impl
 import com.astrainteractive.synk.api.remote.RemoteApi
 import com.astrainteractive.synk.api.remote.entities.PlayerDAO
 import com.astrainteractive.synk.api.remote.entities.PlayerTable
-import com.astrainteractive.synk.api.remote.mapping.PlayerDTOMapper
-import com.astrainteractive.synk.api.remote.mapping.PlayerDTOMapperImpl
+import com.astrainteractive.synk.api.remote.mapping.PlayerModelMapper
+import com.astrainteractive.synk.api.remote.mapping.PlayerModelMapperImpl
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
-import ru.astrainteractive.synk.core.model.PlayerDTO
+import ru.astrainteractive.synk.core.model.PlayerModel
 import java.util.UUID
 
 internal class RemoteApiImpl(
     private val database: Database,
-    private val playerDTOMapper: PlayerDTOMapper = PlayerDTOMapperImpl
+    private val playerModelMapper: PlayerModelMapper = PlayerModelMapperImpl
 ) : RemoteApi {
     override fun insertOrUpdate(
-        playerDTO: PlayerDTO
+        playerModel: PlayerModel
     ) = transaction(database) {
-        val isExists = select(playerDTO.minecraftUUID) != null
-        if (isExists) delete(playerDTO.minecraftUUID)
-        insert(playerDTO)
+        val isExists = select(playerModel.minecraftUUID) != null
+        if (isExists) delete(playerModel.minecraftUUID)
+        insert(playerModel)
     }
 
     override fun insert(
-        playerDTO: PlayerDTO
+        playerModel: PlayerModel
     ) = transaction(database) {
-        PlayerDAO.new(playerDTOMapper.toExposed(playerDTO)).let(playerDTOMapper::toDTO)
+        PlayerDAO.new(playerModelMapper.toExposed(playerModel)).let(playerModelMapper::toDTO)
     }
 
     override fun select(
         uuid: UUID
     ) = transaction(database) {
-        PlayerDAO.find(PlayerTable.minecraftUUID eq uuid.toString()).firstOrNull()?.let(playerDTOMapper::toDTO)
+        PlayerDAO.find(PlayerTable.minecraftUUID eq uuid.toString()).firstOrNull()?.let(playerModelMapper::toDTO)
     }
 
     override fun delete(uuid: UUID) = transaction(database) {

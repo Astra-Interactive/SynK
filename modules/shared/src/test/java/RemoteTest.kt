@@ -1,7 +1,7 @@
 
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.encoding.IO
-import ru.astrainteractive.synk.core.model.PlayerDTO
+import ru.astrainteractive.synk.core.model.PlayerModel
 import java.util.UUID
 import kotlin.random.Random
 import kotlin.test.Test
@@ -9,8 +9,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class RemoteTest {
-    private val randomPlayerDTO: PlayerDTO
-        get() = PlayerDTO(
+    private val randomPlayerModel: PlayerModel
+        get() = PlayerModel(
             minecraftUUID = UUID.randomUUID(),
             totalExperience = Random.nextInt(0, 1024),
             health = Random.nextDouble(0.0, 20.0),
@@ -24,15 +24,15 @@ class RemoteTest {
     @Test
     fun `Insert - select - delete`(): Unit = runBlocking {
         val api = MockApiRemoteModule().also { it.lifecycle.onEnable() }.remoteApi
-        val playerDTO = randomPlayerDTO
-        api.insert(playerDTO).also {
-            assertEquals(it, playerDTO)
+        val playerModel = randomPlayerModel
+        api.insert(playerModel).also {
+            assertEquals(it, playerModel)
         }
-        api.select(playerDTO.minecraftUUID).also {
-            assertEquals(it, playerDTO)
+        api.select(playerModel.minecraftUUID).also {
+            assertEquals(it, playerModel)
         }
-        api.delete(playerDTO.minecraftUUID).also {
-            val selected = api.select(playerDTO.minecraftUUID)
+        api.delete(playerModel.minecraftUUID).also {
+            val selected = api.select(playerModel.minecraftUUID)
             assertNull(selected)
         }
     }
@@ -40,13 +40,13 @@ class RemoteTest {
     @Test
     fun `Insert and update`(): Unit = runBlocking {
         val api = MockApiRemoteModule().also { it.lifecycle.onEnable() }.remoteApi
-        val playerDTO = api.insert(randomPlayerDTO)
-        val copiedPlayerDTO = playerDTO.copy(foodLevel = -10)
-        api.insertOrUpdate(copiedPlayerDTO).also {
-            assertEquals(it, copiedPlayerDTO)
+        val playerModel = api.insert(randomPlayerModel)
+        val copiedPlayerModel = playerModel.copy(foodLevel = -10)
+        api.insertOrUpdate(copiedPlayerModel).also {
+            assertEquals(it, copiedPlayerModel)
         }
-        api.select(playerDTO.minecraftUUID).also {
-            assertEquals(it, copiedPlayerDTO)
+        api.select(playerModel.minecraftUUID).also {
+            assertEquals(it, copiedPlayerModel)
         }
     }
 }

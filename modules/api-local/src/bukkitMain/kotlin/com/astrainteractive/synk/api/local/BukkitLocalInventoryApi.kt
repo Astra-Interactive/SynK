@@ -4,7 +4,7 @@ import com.astrainteractive.synk.api.local.mapping.BukkitPlayerMapper
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.filemanager.DefaultSpigotFileManager
-import ru.astrainteractive.synk.core.model.PlayerDTO
+import ru.astrainteractive.synk.core.model.PlayerModel
 import java.io.File
 
 internal class BukkitLocalInventoryApi(
@@ -12,10 +12,10 @@ internal class BukkitLocalInventoryApi(
     private val bukkitPlayerMapper: BukkitPlayerMapper
 ) : LocalInventoryApi<ItemStack> {
 
-    override fun savePlayer(player: PlayerDTO, type: LocalInventoryApi.TYPE) {
-        val bukkitPlayer = bukkitPlayerMapper.fromDTO(player)
+    override fun savePlayer(playerModel: PlayerModel, type: LocalInventoryApi.TYPE) {
+        val bukkitPlayer = bukkitPlayerMapper.fromDTO(playerModel)
 
-        val name = "temp/${player.minecraftUUID}/${type.name}_${System.currentTimeMillis()}.yml"
+        val name = "temp/${playerModel.minecraftUUID}/${type.name}_${System.currentTimeMillis()}.yml"
         val fileManager = DefaultSpigotFileManager(plugin, name)
         val config = fileManager.fileConfiguration
         config.set("player.items", bukkitPlayer.inventory.contents)
@@ -23,21 +23,21 @@ internal class BukkitLocalInventoryApi(
         fileManager.save()
     }
 
-    override fun loadPlayerSaves(player: PlayerDTO): List<File> {
+    override fun loadPlayerSaves(playerModel: PlayerModel): List<File> {
         val dataFolder = plugin.dataFolder
-        val playerFolder = File(dataFolder, "temp/${File.separator}${player.minecraftUUID}${File.separator}")
+        val playerFolder = File(dataFolder, "temp/${File.separator}${playerModel.minecraftUUID}${File.separator}")
         return playerFolder.listFiles()?.filter { it.extension == "yml" } ?: emptyList()
     }
 
-    override fun readPlayerInventorySave(player: PlayerDTO, file: File): List<ItemStack> {
-        val name = "temp/${player.minecraftUUID}/${file.name}"
+    override fun readPlayerInventorySave(playerModel: PlayerModel, file: File): List<ItemStack> {
+        val name = "temp/${playerModel.minecraftUUID}/${file.name}"
         val fileManager = DefaultSpigotFileManager(plugin, name)
         val config = fileManager.fileConfiguration
         return config.getList("player.items") as? List<ItemStack> ?: emptyList()
     }
 
-    override fun readPlayerEnderChestSave(player: PlayerDTO, file: File): List<ItemStack> {
-        val name = "temp/${player.minecraftUUID}/${file.name}"
+    override fun readPlayerEnderChestSave(playerModel: PlayerModel, file: File): List<ItemStack> {
+        val name = "temp/${playerModel.minecraftUUID}/${file.name}"
         val fileManager = DefaultSpigotFileManager(plugin, name)
         val config = fileManager.fileConfiguration
         return config.getList("player.enderchest") as? List<ItemStack> ?: emptyList()

@@ -1,7 +1,7 @@
-import com.astrainteractive.synk.utils.ConcurrentHashMapLocker
-import com.astrainteractive.synk.utils.ConcurrentSkipListSetLocker
-import com.astrainteractive.synk.utils.HashSetLocker
-import com.astrainteractive.synk.utils.Locker
+import com.astrainteractive.synk.locker.ConcurrentHashMapLocker
+import com.astrainteractive.synk.locker.ConcurrentSkipListSetLocker
+import com.astrainteractive.synk.locker.HashSetLocker
+import com.astrainteractive.synk.locker.Locker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

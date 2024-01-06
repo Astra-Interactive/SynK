@@ -3,6 +3,7 @@ package com.astrainteractive.synk.di
 import com.astrainteractive.synk.api.local.di.BukkitApiLocalModule
 import com.astrainteractive.synk.api.remote.di.ApiRemoteModule
 import com.astrainteractive.synk.bungee.di.SpigotBungeeModule
+import com.astrainteractive.synk.events.di.EventModule
 import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.encoding.BukkitIOStreamProvider
 import ru.astrainteractive.astralibs.encoding.Encoder
@@ -15,7 +16,7 @@ interface RootModule {
     val sharedModule: SharedModule
     val spigotBungeeModule: SpigotBungeeModule
     val coreModule: CoreModule
-
+    val eventModule: EventModule
     class Default : RootModule {
         override val pluginModule: PluginModule by lazy {
             PluginModule.Default()
@@ -30,7 +31,7 @@ interface RootModule {
 
         override val apiLocalModule: BukkitApiLocalModule by lazy {
             BukkitApiLocalModule.Default(
-                serializer = coreModule.encoder,
+                encoder = coreModule.encoder,
                 plugin = pluginModule.plugin.value
             )
         }
@@ -49,6 +50,9 @@ interface RootModule {
             SpigotBungeeModule.Default(
                 plugin = pluginModule.plugin.value
             )
+        }
+        override val eventModule: EventModule by lazy {
+            EventModule.Default(this)
         }
     }
 }

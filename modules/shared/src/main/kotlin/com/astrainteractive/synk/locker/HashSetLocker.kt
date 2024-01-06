@@ -1,9 +1,7 @@
-package com.astrainteractive.synk.utils
+package com.astrainteractive.synk.locker
 
-import java.util.concurrent.ConcurrentHashMap
-
-class ConcurrentHashMapLocker<T> : Locker<T> {
-    private val set: MutableSet<T> = ConcurrentHashMap.newKeySet<T>()
+class HashSetLocker<T> : Locker<T> {
+    private val set: MutableSet<T> = HashSet<T>()
     override suspend fun lock(obj: T): Boolean {
         return set.add(obj)
     }
@@ -15,6 +13,7 @@ class ConcurrentHashMapLocker<T> : Locker<T> {
     override suspend fun isLocked(obj: T?): Boolean {
         return set.contains(obj)
     }
+
     override fun clear() {
         set.clear()
     }

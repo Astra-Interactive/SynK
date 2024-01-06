@@ -2,9 +2,9 @@ package com.astrainteractive.synk.di
 
 import com.astrainteractive.synk.api.local.LocalInventoryApi
 import com.astrainteractive.synk.api.remote.RemoteApi
+import com.astrainteractive.synk.locker.ConcurrentHashMapLocker
+import com.astrainteractive.synk.locker.Locker
 import com.astrainteractive.synk.shared.EventController
-import com.astrainteractive.synk.utils.ConcurrentHashMapLocker
-import com.astrainteractive.synk.utils.Locker
 import ru.astrainteractive.klibs.kdi.Single
 import ru.astrainteractive.klibs.kdi.getValue
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers

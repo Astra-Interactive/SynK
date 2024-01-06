@@ -1,11 +1,11 @@
 package com.astrainteractive.synk.api.remote
 
-import ru.astrainteractive.synk.core.model.PlayerDTO
+import ru.astrainteractive.synk.core.model.PlayerModel
 import java.util.*
 
 interface RemoteApi {
-    fun insertOrUpdate(playerDTO: PlayerDTO): PlayerDTO
-    fun insert(playerDTO: PlayerDTO): PlayerDTO
-    fun select(uuid: UUID): PlayerDTO?
+    fun insertOrUpdate(playerModel: PlayerModel): PlayerModel
+    fun insert(playerModel: PlayerModel): PlayerModel
+    fun select(uuid: UUID): PlayerModel?
     fun delete(uuid: UUID): Unit
 }

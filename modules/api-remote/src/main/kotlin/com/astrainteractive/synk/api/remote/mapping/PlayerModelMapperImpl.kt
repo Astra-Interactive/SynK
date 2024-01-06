@@ -3,14 +3,14 @@ package com.astrainteractive.synk.api.remote.mapping
 import com.astrainteractive.synk.api.remote.entities.PlayerDAO
 import ru.astrainteractive.astralibs.encoding.IO
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
-import ru.astrainteractive.synk.core.model.PlayerDTO
+import ru.astrainteractive.synk.core.model.PlayerModel
 import java.util.UUID
 
-internal interface PlayerDTOMapper : Mapper<PlayerDAO, PlayerDTO>, ExposedMapper<PlayerDAO, PlayerDTO>
+internal interface PlayerModelMapper : Mapper<PlayerDAO, PlayerModel>, ExposedMapper<PlayerDAO, PlayerModel>
 
-internal object PlayerDTOMapperImpl : PlayerDTOMapper {
-    override fun toDTO(it: PlayerDAO): PlayerDTO {
-        return PlayerDTO(
+internal object PlayerModelMapperImpl : PlayerModelMapper {
+    override fun toDTO(it: PlayerDAO): PlayerModel {
+        return PlayerModel(
             minecraftUUID = UUID.fromString(it.minecraftUUID),
             totalExperience = it.experience,
             health = it.health,
@@ -22,11 +22,11 @@ internal object PlayerDTOMapperImpl : PlayerDTOMapper {
         )
     }
 
-    override fun fromDTO(it: PlayerDTO): PlayerDAO {
+    override fun fromDTO(it: PlayerModel): PlayerDAO {
         throw NotImplementedError()
     }
 
-    override fun toExposed(it: PlayerDTO): PlayerDAO.() -> Unit = {
+    override fun toExposed(it: PlayerModel): PlayerDAO.() -> Unit = {
         this.minecraftUUID = it.minecraftUUID.toString()
         this.experience = it.totalExperience
         this.health = it.health

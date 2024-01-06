@@ -14,9 +14,9 @@ interface BukkitApiLocalModule {
     val bukkitPlayerMapper: BukkitPlayerMapper
     val localPlayerDataSource: LocalInventoryApi<ItemStack>
 
-    class Default(serializer: Encoder, plugin: JavaPlugin) : BukkitApiLocalModule {
+    class Default(encoder: Encoder, plugin: JavaPlugin) : BukkitApiLocalModule {
         override val bukkitPlayerMapper: BukkitPlayerMapper by Provider {
-            BukkitPlayerMapperImpl(serializer = serializer)
+            BukkitPlayerMapperImpl(encoder = encoder)
         }
         override val localPlayerDataSource: LocalInventoryApi<ItemStack> by Provider {
             BukkitLocalInventoryApi(

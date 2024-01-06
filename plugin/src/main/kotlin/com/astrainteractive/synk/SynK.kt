@@ -4,8 +4,6 @@ import CommandManager
 import com.astrainteractive.synk.bungee.models.BungeeMessage
 import com.astrainteractive.synk.commands.di.CommandContainer
 import com.astrainteractive.synk.di.RootModule
-import com.astrainteractive.synk.events.EventHandler
-import com.astrainteractive.synk.events.di.EventContainer
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.event.HandlerList
@@ -20,7 +18,8 @@ class SynK : JavaPlugin(), Lifecycle {
     private val lifecycles: List<Lifecycle>
         get() = listOf(
             rootModule.coreModule.lifecycle,
-            rootModule.apiRemoteModule.lifecycle
+            rootModule.apiRemoteModule.lifecycle,
+            rootModule.eventModule.lifecycle
         )
 
     /**
@@ -28,7 +27,6 @@ class SynK : JavaPlugin(), Lifecycle {
      */
     override fun onEnable() {
         reloadPlugin()
-        EventHandler(EventContainer.Default(rootModule))
         CommandManager(CommandContainer.Default(rootModule))
         rootModule.spigotBungeeModule.bungeeController.value.registerChannel(BungeeMessage.BUNGEE_CHANNEL)
         lifecycles.forEach(Lifecycle::onEnable)
@@ -44,7 +42,6 @@ class SynK : JavaPlugin(), Lifecycle {
             rootModule.sharedModule.eventController.saveAllPlayers(players)
         }
         HandlerList.unregisterAll(this)
-        rootModule.pluginModule.eventListener.value.onDisable()
         lifecycles.forEach(Lifecycle::onDisable)
     }
 

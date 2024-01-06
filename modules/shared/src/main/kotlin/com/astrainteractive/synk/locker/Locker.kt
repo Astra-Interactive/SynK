@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.utils
+package com.astrainteractive.synk.locker
 
 interface Locker<T> {
     suspend fun lock(obj: T): Boolean

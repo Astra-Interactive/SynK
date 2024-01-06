@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.utils
+package com.astrainteractive.synk.locker
 
 import java.util.concurrent.ConcurrentSkipListSet
 

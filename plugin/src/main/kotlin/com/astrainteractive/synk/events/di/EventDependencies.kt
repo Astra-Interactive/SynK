@@ -8,17 +8,18 @@ import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.klibs.kdi.getValue
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
-interface EventContainer {
+interface EventDependencies {
     val controller: EventController
     val playerMapper: BukkitPlayerMapper
     val eventListener: EventListener
     val plugin: SynK
     val dispatch: KotlinDispatchers
-    class Default(rootModuleImpl: RootModule) : EventContainer {
-        override val controller: EventController = rootModuleImpl.sharedModule.eventController
-        override val playerMapper: BukkitPlayerMapper = rootModuleImpl.apiLocalModule.bukkitPlayerMapper
-        override val eventListener: EventListener by rootModuleImpl.pluginModule.eventListener
-        override val plugin: SynK by rootModuleImpl.pluginModule.plugin
-        override val dispatch: KotlinDispatchers = rootModuleImpl.coreModule.dispatchers
+
+    class Default(rootModule: RootModule, eventModule: EventModule) : EventDependencies {
+        override val controller: EventController = rootModule.sharedModule.eventController
+        override val playerMapper: BukkitPlayerMapper = rootModule.apiLocalModule.bukkitPlayerMapper
+        override val eventListener: EventListener = eventModule.eventListener
+        override val plugin: SynK by rootModule.pluginModule.plugin
+        override val dispatch: KotlinDispatchers = rootModule.coreModule.dispatchers
     }
 }

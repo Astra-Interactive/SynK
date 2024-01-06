@@ -7,9 +7,9 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import ru.astrainteractive.astralibs.encoding.Encoder
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
-import ru.astrainteractive.synk.core.model.PlayerDTO
+import ru.astrainteractive.synk.core.model.PlayerModel
 
-interface BukkitPlayerMapper : Mapper<Player, PlayerDTO> {
+interface BukkitPlayerMapper : Mapper<Player, PlayerModel> {
     companion object {
         operator fun invoke(serializer: Encoder): BukkitPlayerMapper {
             return BukkitPlayerMapperImpl(serializer)
@@ -18,28 +18,28 @@ interface BukkitPlayerMapper : Mapper<Player, PlayerDTO> {
 }
 
 internal class BukkitPlayerMapperImpl(
-    private val serializer: Encoder
+    private val encoder: Encoder
 ) : BukkitPlayerMapper {
-    override fun toDTO(it: Player): PlayerDTO = PlayerDTO(
+    override fun toDTO(it: Player): PlayerModel = PlayerModel(
         minecraftUUID = it.uniqueId,
         totalExperience = it.totalExperience,
         health = it.health,
         foodLevel = it.foodLevel,
         lastServerName = "",
-        items = serializer.encodeList(it.inventory.contents.filterNotNull()),
-        enderChestItems = serializer.encodeList(it.enderChest.contents.filterNotNull()),
-        effects = serializer.encodeList(it.activePotionEffects.filterNotNull()),
+        items = encoder.encodeList(it.inventory.contents.filterNotNull()),
+        enderChestItems = encoder.encodeList(it.enderChest.contents.filterNotNull()),
+        effects = encoder.encodeList(it.activePotionEffects.filterNotNull()),
     )
 
-    override fun fromDTO(it: PlayerDTO): Player {
+    override fun fromDTO(it: PlayerModel): Player {
         val player = Bukkit.getPlayer(it.minecraftUUID) ?: throw ApiLocalException.PlayerNotFoundException
         player.totalExperience = it.totalExperience
         player.health = it.health
         player.foodLevel = it.foodLevel
-        player.inventory.contents = serializer.decodeList<ItemStack>(it.items).toTypedArray()
-        player.enderChest.contents = serializer.decodeList<ItemStack>(it.enderChestItems).toTypedArray()
+        player.inventory.contents = encoder.decodeList<ItemStack>(it.items).toTypedArray()
+        player.enderChest.contents = encoder.decodeList<ItemStack>(it.enderChestItems).toTypedArray()
         player.activePotionEffects.map { player.removePotionEffect(it.type) }
-        serializer.decodeList<PotionEffect>(it.effects).map(player::addPotionEffect)
+        encoder.decodeList<PotionEffect>(it.effects).map(player::addPotionEffect)
         return player
     }
 }
