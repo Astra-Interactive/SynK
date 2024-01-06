@@ -28,7 +28,7 @@ class EventHandler(dependencies: EventDependencies) : EventDependencies by depen
             player = playerModel,
             onLoaded = {
                 withContext(dispatch.Main) {
-                    playerMapper.fromDTO(it)
+                    playerLoader.loadPlayer(it)
                 }
             }
         )
