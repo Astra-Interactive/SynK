@@ -20,7 +20,7 @@ import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.world.WorldSaveEvent
 import ru.astrainteractive.astralibs.event.DSLEvent
 
-class EventHandler(dependencies: EventDependencies) : EventDependencies by dependencies {
+class CommonEvents(dependencies: EventDependencies) : EventDependencies by dependencies {
 
     val onPlayerJoin = DSLEvent<PlayerJoinEvent>(eventListener, plugin) { e ->
         val playerModel = e.player.let(playerMapper::toDTO)

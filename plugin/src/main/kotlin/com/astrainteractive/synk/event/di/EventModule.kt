@@ -1,7 +1,7 @@
 package com.astrainteractive.synk.event.di
 
 import com.astrainteractive.synk.di.RootModule
-import com.astrainteractive.synk.event.EventHandler
+import com.astrainteractive.synk.event.CommonEvents
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.klibs.kdi.Factory
@@ -19,15 +19,15 @@ interface EventModule {
             EventDependencies.Default(rootModule, this)
         }
 
-        private val eventHandlerFactory = Factory {
-            EventHandler(dependencies)
+        private val commonEventsFactory = Factory {
+            CommonEvents(dependencies)
         }
 
         override val lifecycle: Lifecycle by lazy {
             Lifecycle.Lambda(
                 onEnable = {
                     eventListener.onEnable(rootModule.pluginModule.plugin.value)
-                    eventHandlerFactory.create()
+                    commonEventsFactory.create()
                 },
                 onDisable = {
                     eventListener.onDisable()
