@@ -1,24 +1,24 @@
-package com.astrainteractive.synk.api.mapping
+package com.astrainteractive.synk.api.local.mapping
 
-import com.astrainteractive.synk.api.exception.ApiLocalException
-import com.astrainteractive.synk.models.dto.PlayerDTO
+import com.astrainteractive.synk.api.local.exception.ApiLocalException
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
-import ru.astrainteractive.astralibs.encoding.Serializer
+import ru.astrainteractive.astralibs.encoding.Encoder
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
+import ru.astrainteractive.synk.core.model.PlayerDTO
 
 interface BukkitPlayerMapper : Mapper<Player, PlayerDTO> {
     companion object {
-        operator fun invoke(serializer: Serializer): BukkitPlayerMapper {
+        operator fun invoke(serializer: Encoder): BukkitPlayerMapper {
             return BukkitPlayerMapperImpl(serializer)
         }
     }
 }
 
 internal class BukkitPlayerMapperImpl(
-    private val serializer: Serializer
+    private val serializer: Encoder
 ) : BukkitPlayerMapper {
     override fun toDTO(it: Player): PlayerDTO = PlayerDTO(
         minecraftUUID = it.uniqueId,

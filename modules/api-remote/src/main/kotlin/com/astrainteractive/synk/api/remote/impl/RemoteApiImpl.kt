@@ -5,13 +5,13 @@ import com.astrainteractive.synk.api.remote.entities.PlayerDAO
 import com.astrainteractive.synk.api.remote.entities.PlayerTable
 import com.astrainteractive.synk.api.remote.mapping.PlayerDTOMapper
 import com.astrainteractive.synk.api.remote.mapping.PlayerDTOMapperImpl
-import com.astrainteractive.synk.models.dto.PlayerDTO
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
+import ru.astrainteractive.synk.core.model.PlayerDTO
 import java.util.UUID
 
-class RemoteApiImpl(
+internal class RemoteApiImpl(
     private val database: Database,
     private val playerDTOMapper: PlayerDTOMapper = PlayerDTOMapperImpl
 ) : RemoteApi {

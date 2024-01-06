@@ -27,7 +27,7 @@ class EventHandler(container: EventContainer) : EventContainer by container {
         controller.loadPlayer(
             player = playerDTO,
             onLoaded = {
-                withContext(dispatch.BukkitMain) {
+                withContext(dispatch.Main) {
                     playerMapper.fromDTO(it)
                 }
             }

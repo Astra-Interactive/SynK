@@ -2,11 +2,14 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 }
+
 dependencies {
-    // AstraLibs
-    implementation(libs.minecraft.astralibs.ktxcore)
+    // Coroutines
+    implementation(libs.kotlin.coroutines.core)
     // Serialization
     implementation(libs.kotlin.serialization)
     implementation(libs.kotlin.serializationJson)
     implementation(libs.kotlin.serializationKaml)
+    // AstraLibs
+    implementation(libs.minecraft.astralibs.ktxcore)
 }

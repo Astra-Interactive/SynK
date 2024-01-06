@@ -2,29 +2,36 @@ package com.astrainteractive.synk
 
 import CommandManager
 import com.astrainteractive.synk.bungee.models.BungeeMessage
-import com.astrainteractive.synk.di.impl.CommandContainerImpl
-import com.astrainteractive.synk.di.impl.EventContainerImpl
-import com.astrainteractive.synk.di.impl.RootModuleImpl
+import com.astrainteractive.synk.commands.di.CommandContainer
+import com.astrainteractive.synk.di.RootModule
 import com.astrainteractive.synk.events.EventHandler
+import com.astrainteractive.synk.events.di.EventContainer
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
+import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 
 /**
  * Initial class for your plugin
  */
-class SynK : JavaPlugin() {
-    private val rootModule = RootModuleImpl()
+class SynK : JavaPlugin(), Lifecycle {
+    private val rootModule = RootModule.Default()
+    private val lifecycles: List<Lifecycle>
+        get() = listOf(
+            rootModule.coreModule.lifecycle,
+            rootModule.apiRemoteModule.lifecycle
+        )
 
     /**
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
         reloadPlugin()
-        EventHandler(EventContainerImpl(rootModule))
-        CommandManager(CommandContainerImpl(rootModule))
+        EventHandler(EventContainer.Default(rootModule))
+        CommandManager(CommandContainer.Default(rootModule))
         rootModule.spigotBungeeModule.bungeeController.value.registerChannel(BungeeMessage.BUNGEE_CHANNEL)
+        lifecycles.forEach(Lifecycle::onEnable)
     }
 
     /**
@@ -38,15 +45,13 @@ class SynK : JavaPlugin() {
         }
         HandlerList.unregisterAll(this)
         rootModule.pluginModule.eventListener.value.onDisable()
+        lifecycles.forEach(Lifecycle::onDisable)
     }
 
     /**
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        with(rootModule.pluginModule) {
-            translation.reload()
-            pluginConfig.reload()
-        }
+        lifecycles.forEach(Lifecycle::onReload)
     }
 }

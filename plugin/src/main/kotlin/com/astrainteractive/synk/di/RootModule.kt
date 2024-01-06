@@ -1,10 +1,12 @@
 package com.astrainteractive.synk.di
 
-import com.astrainteractive.synk.api.di.BukkitApiLocalModule
+import com.astrainteractive.synk.api.local.di.BukkitApiLocalModule
 import com.astrainteractive.synk.api.remote.di.ApiRemoteModule
 import com.astrainteractive.synk.bungee.di.SpigotBungeeModule
-import com.astrainteractive.synk.commands.di.CommandContainer
-import com.astrainteractive.synk.events.di.EventContainer
+import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
+import ru.astrainteractive.astralibs.encoding.BukkitIOStreamProvider
+import ru.astrainteractive.astralibs.encoding.Encoder
+import ru.astrainteractive.synk.core.di.CoreModule
 
 interface RootModule {
     val pluginModule: PluginModule
@@ -12,8 +14,41 @@ interface RootModule {
     val apiRemoteModule: ApiRemoteModule
     val sharedModule: SharedModule
     val spigotBungeeModule: SpigotBungeeModule
+    val coreModule: CoreModule
 
-    // Containers
-    val eventContainer: EventContainer
-    val commandContainer: CommandContainer
+    class Default : RootModule {
+        override val pluginModule: PluginModule by lazy {
+            PluginModule.Default()
+        }
+        override val coreModule: CoreModule by lazy {
+            CoreModule.Default(
+                dataFolder = pluginModule.plugin.value.dataFolder,
+                dispatchers = DefaultBukkitDispatchers(pluginModule.plugin.value),
+                encoder = Encoder(BukkitIOStreamProvider)
+            )
+        }
+
+        override val apiLocalModule: BukkitApiLocalModule by lazy {
+            BukkitApiLocalModule.Default(
+                serializer = coreModule.encoder,
+                plugin = pluginModule.plugin.value
+            )
+        }
+        override val apiRemoteModule: ApiRemoteModule by lazy {
+            ApiRemoteModule.Default(configProvider = { coreModule.configurationModule.value.mysql })
+        }
+        override val sharedModule: SharedModule by lazy {
+            SharedModule.Default(
+                remoteApi = apiRemoteModule.remoteApi,
+                localInventoryApi = apiLocalModule.localPlayerDataSource,
+                dispatchers = DefaultBukkitDispatchers(pluginModule.plugin.value)
+            )
+        }
+
+        override val spigotBungeeModule: SpigotBungeeModule by lazy {
+            SpigotBungeeModule.Default(
+                plugin = pluginModule.plugin.value
+            )
+        }
+    }
 }

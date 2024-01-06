@@ -24,7 +24,6 @@ dependencies {
     // Spigot dependencies
     compileOnly(libs.minecraft.paper.api)
     // Local
-    implementation(projects.modules.models)
     implementation(projects.modules.apiRemote)
     implementation(projects.modules.apiLocal)
 }

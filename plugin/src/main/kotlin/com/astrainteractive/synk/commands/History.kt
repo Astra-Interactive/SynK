@@ -1,20 +1,20 @@
 package com.astrainteractive.synk.commands
 
 import CommandManager
-import com.astrainteractive.synk.plugin.SynkPermission
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
-import ru.astrainteractive.astralibs.async.PluginScope
 import ru.astrainteractive.astralibs.command.registerCommand
+import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
+import ru.astrainteractive.synk.core.SynkPermission
 
 @OptIn(UnsafeApi::class)
 @Suppress("UnusedPrivateMember")
 fun CommandManager.history() = plugin.registerCommand("history") {
-    if (!SynkPermission.History.hasPermission(sender)) {
+    if (!sender.toPermissible().hasPermission(SynkPermission.History)) {
         sender.sendMessage("No permission")
         return@registerCommand
     }
@@ -26,7 +26,7 @@ fun CommandManager.history() = plugin.registerCommand("history") {
         sender.sendMessage("${ChatColor.RED}Wrong usage! /history <player>")
     }.successOrNull()?.value ?: return@registerCommand
 
-    PluginScope.launch(Dispatchers.IO) {
+    scope.launch(Dispatchers.IO) {
         TODO()
     }
 }

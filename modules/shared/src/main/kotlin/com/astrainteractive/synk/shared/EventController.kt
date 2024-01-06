@@ -3,24 +3,25 @@ package com.astrainteractive.synk.shared
 import com.astrainteractive.synk.api.local.LocalInventoryApi
 import com.astrainteractive.synk.api.remote.RemoteApi
 import com.astrainteractive.synk.api.remote.exception.RemoteApiException
-import com.astrainteractive.synk.models.dto.PlayerDTO
 import com.astrainteractive.synk.utils.Locker
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
-import ru.astrainteractive.astralibs.async.PluginScope
+import ru.astrainteractive.astralibs.async.AsyncComponent
+import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
+import ru.astrainteractive.synk.core.model.PlayerDTO
 import java.util.UUID
 
 class EventController(
     private val locker: Locker<UUID>,
     private val sqlDataSource: RemoteApi,
-    private val localDataSource: LocalInventoryApi<*>
-) {
+    private val localDataSource: LocalInventoryApi<*>,
+    private val dispatchers: KotlinDispatchers
+) : AsyncComponent() {
     fun isPlayerLocked(player: PlayerDTO?): Boolean = runBlocking {
         locker.isLocked(player?.minecraftUUID)
     }
@@ -29,7 +30,7 @@ class EventController(
     private inline fun <reified T> withLock(
         uuid: UUID,
         crossinline block: suspend CoroutineScope.() -> T
-    ) = PluginScope.launch(Dispatchers.IO) {
+    ) = launch(dispatchers.IO) {
         if (locker.isLocked(uuid)) throw RemoteApiException.PlayerLockedException
         locker.lock(uuid)
         val result = block.invoke(this)
@@ -41,7 +42,7 @@ class EventController(
         player: PlayerDTO,
         onLoaded: suspend CoroutineScope.(PlayerDTO) -> Unit
     ) = withLock(player.minecraftUUID) {
-        withContext(Dispatchers.IO) { localDataSource.savePlayer(player, LocalInventoryApi.TYPE.ENTER) }
+        withContext(dispatchers.IO) { localDataSource.savePlayer(player, LocalInventoryApi.TYPE.ENTER) }
         val playerDTO = sqlDataSource.select(player.minecraftUUID) ?: return@withLock
         onLoaded.invoke(this, playerDTO)
     }
@@ -55,7 +56,7 @@ class EventController(
     }
 
     @OptIn(UnsafeApi::class)
-    fun saveAllPlayers(players: List<PlayerDTO>) = PluginScope.launch(Dispatchers.IO) {
+    fun saveAllPlayers(players: List<PlayerDTO>) = launch(dispatchers.IO) {
         players.map {
             async {
                 savePlayer(it, LocalInventoryApi.TYPE.SAVE_ALL)

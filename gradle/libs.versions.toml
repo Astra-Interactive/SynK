@@ -18,7 +18,7 @@ minecraft-protocollib = "4.8.0"
 minecraft-wg = "7.0.7"
 minecraft-vault = "1.7"
 minecraft-coreprotect = "21.2"
-minecraft-astralibs = "2.11.0"
+minecraft-astralibs = "2.19.0"
 minecraft-bstats = "3.0.0"
 minecraft-mockbukkit = "v1.19-SNAPSHOT"
 
@@ -31,9 +31,9 @@ tests-junit-bom = "5.7.0"
 
 # Fabric
 minecraft-fabric-loom = "1.0-SNAPSHOT"
-minecraft-fabric-kotlin = "1.8.1+kotlin.1.7.0"
-minecraft-fabric-loader = "0.14.9"
-minecraft-fabric-api = "0.60.0+1.19.2"
+minecraft-fabric-kotlin = "1.10.0+kotlin.1.9.0"
+minecraft-fabric-loader = "0.14.21"
+minecraft-fabric-api = "0.85.0+1.20.1"
 
 # Forge
 minecraft-forge-net = "5.1.61"
@@ -48,6 +48,13 @@ gradle-buildconfig = "3.1.0"
 # Exposed
 exposed = "0.38.1"
 
+[bundles]
+exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
+minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-spigot-core", "minecraft-vaultapi", "minecraft-papi"]
+testing-kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
+testing-libs = ["tests-junit-jupiter-api", "tests-org-testing", "tests-junit5", "tests-junit-jupiter"]
+kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-tooling-core"]
+
 [libraries]
 
 # Kotlin
@@ -56,9 +63,8 @@ kotlin-coroutines-coreJvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin-version" }
 kotlin-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-json" }
 kotlin-serializationKaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kotlin-kaml" }
-kotlin-dokka-kotlinJavaPlugin = { module = "org.jetbrains.dokka:kotlin-as-java-plugin", version.ref = "kotlin-version" }
-kotlin-dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin-version" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
+kotlin-tooling-core = { module = "org.jetbrains.kotlin:kotlin-tooling-core", version.ref = "kotlin-version" }
 
 # Shadow
 gradle-shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow" }
@@ -66,9 +72,14 @@ gradle-shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", vers
 # Drivers
 driver-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "driver-jdbc" }
 driver-mysql = { module = "mysql:mysql-connector-java", version.ref = "driver-mysql" }
+driver-h2 = { module = "com.h2database:h2", version.strictly = "2.2.220" }
 
 # Testing
-tests-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
+tests-junit-bom = { module = "org.junit:junit-bom", version.ref = "tests-junit-bom" }
+tests-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "tests-junit-jupiter-api" }
+tests-org-testing = { module = "org.testng:testng", version.ref = "tests-org-testing" }
+tests-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
+tests-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 
 # Exposed
 exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
@@ -87,10 +98,6 @@ minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "m
 minecraft-bstats = { module = "org.bstats:bstats-bukkit", version.ref = "minecraft-bstats" }
 minecraft-mockbukkit = { module = "com.github.MockBukkit:MockBukkit", version.ref = "minecraft-mockbukkit" }
 
-# klibs
-klibs-kdi = { module = "ru.astrainteractive.klibs:kdi", version.strictly = "1.1.0" }
-klibs-mikro = { module = "ru.astrainteractive.klibs:mikro-core", version.strictly = "1.0.0" }
-
 # AstraLibs
 minecraft-astralibs-ktxcore = { module = "ru.astrainteractive.astralibs:ktx-core", version.ref = "minecraft-astralibs" }
 minecraft-astralibs-orm = { module = "ru.astrainteractive.astralibs:orm", version.ref = "minecraft-astralibs" }
@@ -102,12 +109,6 @@ minecraft-fabric-kotlin = { module = "net.fabricmc:fabric-language-kotlin", vers
 minecraft-fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "minecraft-fabric-loader" }
 minecraft-fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "minecraft-fabric-api" }
 minecraft-mojang = { module = "com.mojang:minecraft", version.ref = "minecraft-version" }
-
-[bundles]
-exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
-minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-spigot-core", "minecraft-vaultapi", "minecraft-papi"]
-testing-kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
-kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-gradle"]
 
 [plugins]
 # Kotlin

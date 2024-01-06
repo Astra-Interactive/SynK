@@ -1,5 +1,6 @@
 import ru.astrainteractive.gradleplugin.setupSpigotProcessor
 import ru.astrainteractive.gradleplugin.setupSpigotShadow
+import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
 
 plugins {
     kotlin("jvm")
@@ -29,16 +30,21 @@ minecraftMultiplatform {
         // Spigot dependencies
         compileOnly(libs.minecraft.paper.api)
         // Local
-        implementation(projects.modules.models)
         implementation(projects.modules.apiRemote)
         implementation(projects.modules.apiLocal.bukkitMain)
         implementation(projects.modules.apiLocal)
         implementation(projects.modules.spigotBungee)
         implementation(projects.modules.shared)
+        implementation(projects.modules.core)
     }
 }
-File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\anarchy\\plugins").let { file ->
-    if (file.exists()) setupSpigotShadow(file) else setupSpigotShadow()
+
+val destination = File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins")
+    .takeIf(File::exists)
+    ?: File(rootDir, "jars")
+
+setupSpigotShadow(destination) {
+    archiveBaseName.set("${projectInfo.name}-bukkit")
 }
 
 setupSpigotProcessor()

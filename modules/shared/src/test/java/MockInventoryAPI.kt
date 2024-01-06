@@ -1,5 +1,5 @@
 import com.astrainteractive.synk.api.local.LocalInventoryApi
-import com.astrainteractive.synk.models.dto.PlayerDTO
+import ru.astrainteractive.synk.core.model.PlayerDTO
 import java.io.File
 
 internal object MockInventoryAPI : LocalInventoryApi<Unit> {

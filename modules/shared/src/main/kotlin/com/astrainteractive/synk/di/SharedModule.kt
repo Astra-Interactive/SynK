@@ -7,6 +7,7 @@ import com.astrainteractive.synk.utils.ConcurrentHashMapLocker
 import com.astrainteractive.synk.utils.Locker
 import ru.astrainteractive.klibs.kdi.Single
 import ru.astrainteractive.klibs.kdi.getValue
+import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 import java.util.UUID
 
 interface SharedModule {
@@ -15,7 +16,8 @@ interface SharedModule {
 
     class Default(
         remoteApi: RemoteApi,
-        localInventoryApi: LocalInventoryApi<*>
+        localInventoryApi: LocalInventoryApi<*>,
+        dispatchers: KotlinDispatchers
     ) : SharedModule {
         override val uuidLocker: Locker<UUID> by Single {
             ConcurrentHashMapLocker<UUID>()
@@ -24,7 +26,8 @@ interface SharedModule {
             EventController(
                 locker = uuidLocker,
                 sqlDataSource = remoteApi,
-                localDataSource = localInventoryApi
+                localDataSource = localInventoryApi,
+                dispatchers = dispatchers
             )
         }
     }

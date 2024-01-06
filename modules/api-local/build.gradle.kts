@@ -11,10 +11,10 @@ minecraftMultiplatform {
     dependencies {
         // AstraLibs
         implementation(libs.minecraft.astralibs.ktxcore)
-        // Local
-        implementation(projects.modules.models)
         // Bukkit
         "bukkitMainCompileOnly"(libs.minecraft.astralibs.spigot.core)
         "bukkitMainCompileOnly"(libs.minecraft.paper.api)
+        // Local
+        implementation(projects.modules.core)
     }
 }

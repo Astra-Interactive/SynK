@@ -1,4 +1,4 @@
-package com.astrainteractive.synk.models.dto
+package ru.astrainteractive.synk.core.model
 
 import ru.astrainteractive.astralibs.encoding.IO
 import java.util.UUID

@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.Column
 /**
  * Игрок
  */
-object PlayerTable : IntIdTable() {
+internal object PlayerTable : IntIdTable() {
     val minecraftUUID: Column<String> = varchar("minecraft_name", 128).uniqueIndex()
     val experience: Column<Int> = integer("experience")
     val health: Column<Double> = double("health")
@@ -20,7 +20,7 @@ object PlayerTable : IntIdTable() {
     val effects: Column<String> = text("effects")
 }
 
-class PlayerDAO(id: EntityID<Int>) : Entity<Int>(id) {
+internal class PlayerDAO(id: EntityID<Int>) : Entity<Int>(id) {
     companion object : EntityClass<Int, PlayerDAO>(PlayerTable)
 
     var minecraftUUID by PlayerTable.minecraftUUID

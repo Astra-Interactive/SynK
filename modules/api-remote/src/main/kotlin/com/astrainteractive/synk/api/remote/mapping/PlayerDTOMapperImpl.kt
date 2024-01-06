@@ -1,12 +1,12 @@
 package com.astrainteractive.synk.api.remote.mapping
 
 import com.astrainteractive.synk.api.remote.entities.PlayerDAO
-import com.astrainteractive.synk.models.dto.PlayerDTO
 import ru.astrainteractive.astralibs.encoding.IO
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
+import ru.astrainteractive.synk.core.model.PlayerDTO
 import java.util.UUID
 
-interface PlayerDTOMapper : Mapper<PlayerDAO, PlayerDTO>, ExposedMapper<PlayerDAO, PlayerDTO>
+internal interface PlayerDTOMapper : Mapper<PlayerDAO, PlayerDTO>, ExposedMapper<PlayerDAO, PlayerDTO>
 
 internal object PlayerDTOMapperImpl : PlayerDTOMapper {
     override fun toDTO(it: PlayerDAO): PlayerDTO {

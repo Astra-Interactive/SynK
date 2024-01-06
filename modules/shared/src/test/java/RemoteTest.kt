@@ -1,24 +1,14 @@
-import base.ORMTest
-import base.SQLiteTest
-import com.astrainteractive.synk.api.remote.RemoteApi
-import com.astrainteractive.synk.api.remote.entities.PlayerTable
-import com.astrainteractive.synk.api.remote.impl.RemoteApiImpl
-import com.astrainteractive.synk.models.dto.PlayerDTO
+
 import kotlinx.coroutines.runBlocking
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
 import ru.astrainteractive.astralibs.encoding.IO
-import java.io.File
+import ru.astrainteractive.synk.core.model.PlayerDTO
 import java.util.UUID
 import kotlin.random.Random
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class RemoteTest : ORMTest by SQLiteTest("data.db") {
-    private lateinit var api: RemoteApi
+class RemoteTest {
     private val randomPlayerDTO: PlayerDTO
         get() = PlayerDTO(
             minecraftUUID = UUID.randomUUID(),
@@ -31,23 +21,9 @@ class RemoteTest : ORMTest by SQLiteTest("data.db") {
             effects = IO.Base64(""),
         )
 
-    @AfterTest
-    override fun destroy(): Unit = runBlocking {
-        transaction { SchemaUtils.drop(PlayerTable) }
-        super.destroy()
-        File("data.db").delete()
-    }
-
-    @BeforeTest
-    override fun setup(): Unit = runBlocking {
-        super.setup()
-        val database = assertConnected()
-        transaction { SchemaUtils.create(PlayerTable) }
-        api = RemoteApiImpl(database)
-    }
-
     @Test
     fun `Insert - select - delete`(): Unit = runBlocking {
+        val api = MockApiRemoteModule().also { it.lifecycle.onEnable() }.remoteApi
         val playerDTO = randomPlayerDTO
         api.insert(playerDTO).also {
             assertEquals(it, playerDTO)
@@ -63,6 +39,7 @@ class RemoteTest : ORMTest by SQLiteTest("data.db") {
 
     @Test
     fun `Insert and update`(): Unit = runBlocking {
+        val api = MockApiRemoteModule().also { it.lifecycle.onEnable() }.remoteApi
         val playerDTO = api.insert(randomPlayerDTO)
         val copiedPlayerDTO = playerDTO.copy(foodLevel = -10)
         api.insertOrUpdate(copiedPlayerDTO).also {

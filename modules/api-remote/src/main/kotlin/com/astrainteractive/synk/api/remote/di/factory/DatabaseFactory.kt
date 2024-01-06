@@ -1,43 +1,45 @@
 package com.astrainteractive.synk.api.remote.di.factory
 
 import com.astrainteractive.synk.api.remote.entities.PlayerTable
-import com.astrainteractive.synk.models.config.PluginConfig
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.vendors.H2Dialect
 import org.jetbrains.exposed.sql.vendors.MariaDBDialect
 import org.jetbrains.exposed.sql.vendors.MysqlDialect
 import ru.astrainteractive.klibs.kdi.Factory
+import ru.astrainteractive.synk.core.PluginConfig
 
 internal class DatabaseFactory(
-    private val config: PluginConfig
+    private val sqlConfig: PluginConfig.SqlConfig
 ) : Factory<Database> {
 
-    private val host: String
-        get() = config.mysql.host
-    private val port: String
-        get() = config.mysql.port
-    private val login: String
-        get() = config.mysql.login
-    private val password: String
-        get() = config.mysql.password
-    private val name: String
-        get() = config.mysql.name
-    private val driver: String
-        get() = config.mysql.driver
-
     override fun create(): Database {
-        val db = Database.connect(
-            "jdbc:mysql://$host:$port/$name",
-            driver = driver,
-            user = login,
-            password = password
-        )
+        val db = when (sqlConfig) {
+            is PluginConfig.SqlConfig.SQLite -> {
+                Database.registerDialect(H2Dialect.dialectName) { H2Dialect() }
+                Database.connect(
+                    url = "jdbc:sqlite:${sqlConfig.path}",
+                    driver = "org.sqlite.JDBC",
+                )
+            }
 
-        Database.registerDialect("mariadb") { MariaDBDialect() }
-        Database.registerDialect("mysql") { MysqlDialect() }
+            is PluginConfig.SqlConfig.MySql -> {
+                Database.registerDialect("mariadb") { MariaDBDialect() }
+                Database.registerDialect("mysql") { MysqlDialect() }
+                Database.connect(
+                    url = "jdbc:mysql://${sqlConfig.host}:${sqlConfig.port}/${sqlConfig.name}",
+                    driver = "com.mysql.cj.jdbc.Driver",
+                    user = sqlConfig.login,
+                    password = sqlConfig.password
+                )
+            }
+        }
 
-        transaction {
+        Database.registerDialect(MariaDBDialect.dialectName) { MariaDBDialect() }
+        Database.registerDialect(MysqlDialect.dialectName) { MysqlDialect() }
+
+        transaction(db) {
             val tables = buildList {
                 add(PlayerTable)
             }

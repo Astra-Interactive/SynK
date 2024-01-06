@@ -1,6 +1,6 @@
 package com.astrainteractive.synk.api.local
 
-import com.astrainteractive.synk.models.dto.PlayerDTO
+import ru.astrainteractive.synk.core.model.PlayerDTO
 import java.io.File
 
 interface LocalInventoryApi<DATA> {

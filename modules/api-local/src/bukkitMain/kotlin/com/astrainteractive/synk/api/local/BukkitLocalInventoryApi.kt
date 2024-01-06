@@ -1,14 +1,13 @@
-package com.astrainteractive.synk.api
+package com.astrainteractive.synk.api.local
 
-import com.astrainteractive.synk.api.local.LocalInventoryApi
-import com.astrainteractive.synk.api.mapping.BukkitPlayerMapper
-import com.astrainteractive.synk.models.dto.PlayerDTO
+import com.astrainteractive.synk.api.local.mapping.BukkitPlayerMapper
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.filemanager.DefaultSpigotFileManager
+import ru.astrainteractive.synk.core.model.PlayerDTO
 import java.io.File
 
-class BukkitLocalInventoryApi(
+internal class BukkitLocalInventoryApi(
     private val plugin: JavaPlugin,
     private val bukkitPlayerMapper: BukkitPlayerMapper
 ) : LocalInventoryApi<ItemStack> {
