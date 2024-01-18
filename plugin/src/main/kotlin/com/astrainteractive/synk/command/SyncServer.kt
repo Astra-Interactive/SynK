@@ -2,31 +2,29 @@ package com.astrainteractive.synk.command
 
 import CommandManager
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.command.registerCommand
-import ru.astrainteractive.astralibs.command.registerTabCompleter
-import ru.astrainteractive.astralibs.util.withEntry
+import ru.astrainteractive.astralibs.util.StringListExt.withEntry
 
-fun CommandManager.tabCompleter() = plugin.registerTabCompleter("syncserver") {
+fun CommandManager.tabCompleter() = plugin.getCommand("syncserver")?.setTabCompleter { sender, command, label, args ->
     if (args.isEmpty()) {
-        return@registerTabCompleter config.serverIDList.withEntry(args.last())
+        return@setTabCompleter config.serverIDList.withEntry(args.last())
     }
     if (args.size == 1) {
-        return@registerTabCompleter config.serverIDList.withEntry(args.last())
+        return@setTabCompleter config.serverIDList.withEntry(args.last())
     }
-    return@registerTabCompleter listOf<String>()
+    return@setTabCompleter listOf<String>()
 }
 
-fun CommandManager.syncServer() = plugin.registerCommand("syncserver") {
-    sender.sendMessage(translation.pleaseWait)
-    sender.sendMessage(translation.inventoryLossWarning)
+fun CommandManager.syncServer() = plugin.getCommand("syncserver")?.setExecutor { sender, command, label, args ->
+    translation.pleaseWait.let(kyoriComponentSerializer::toComponent).run(sender::sendMessage)
+    translation.inventoryLossWarning.let(kyoriComponentSerializer::toComponent).run(sender::sendMessage)
     val player = sender as? Player
     player ?: run {
-        sender.sendMessage(translation.onlyPlayerCommand)
-        return@registerCommand
+        translation.onlyPlayerCommand.let(kyoriComponentSerializer::toComponent).run(sender::sendMessage)
+        return@setExecutor true
     }
     val server = args.getOrNull(0) ?: run {
-        sender.sendMessage(translation.inputServerName)
-        return@registerCommand
+        translation.inputServerName.let(kyoriComponentSerializer::toComponent).run(sender::sendMessage)
+        return@setExecutor true
     }
     eventController.changeServer(
         player = bukkitPlayerMapper.toDTO(player),
@@ -34,4 +32,5 @@ fun CommandManager.syncServer() = plugin.registerCommand("syncserver") {
             bungeeController.connectPlayerToServer(server, player)
         }
     )
+    true
 }

@@ -2,6 +2,7 @@ package ru.astrainteractive.synk.core.di.factory
 
 import kotlinx.serialization.encodeToString
 import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager
+import ru.astrainteractive.astralibs.serialization.SerializerExt.parseOrDefault
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
 import ru.astrainteractive.klibs.kdi.Factory
 import ru.astrainteractive.synk.core.PluginTranslation

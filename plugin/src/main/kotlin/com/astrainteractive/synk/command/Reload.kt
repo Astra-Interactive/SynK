@@ -1,7 +1,6 @@
 package com.astrainteractive.synk.command
 
 import CommandManager
-import ru.astrainteractive.astralibs.command.registerCommand
 
 /**
  * Reload command handler
@@ -12,8 +11,9 @@ import ru.astrainteractive.astralibs.command.registerCommand
  *
  * Here you should also check for permission
  */
-fun CommandManager.reload() = plugin.registerCommand("atempreload") {
-    sender.sendMessage(translation.reload)
+fun CommandManager.reload() = plugin.getCommand("atempreload")?.setExecutor { sender, command, label, args ->
+    translation.reload.let(kyoriComponentSerializer::toComponent).run(sender::sendMessage)
     plugin.reloadPlugin()
-    sender.sendMessage(translation.reloadComplete)
+    translation.reloadComplete.let(kyoriComponentSerializer::toComponent).run(sender::sendMessage)
+    true
 }

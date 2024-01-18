@@ -1,7 +1,7 @@
 package com.astrainteractive.synk.api.remote.mapping
 
 import com.astrainteractive.synk.api.remote.entity.PlayerDAO
-import ru.astrainteractive.astralibs.encoding.IO
+import ru.astrainteractive.astralibs.encoding.model.EncodedObject
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
 import ru.astrainteractive.synk.core.model.PlayerModel
 import java.util.UUID
@@ -16,9 +16,9 @@ internal object PlayerModelMapperImpl : PlayerModelMapper {
             health = it.health,
             foodLevel = it.foodLevel,
             lastServerName = it.lastServerName,
-            items = IO.Base64(it.items),
-            enderChestItems = IO.Base64(it.enderChestItems),
-            effects = IO.Base64(it.effects)
+            items = EncodedObject.Base64(it.items),
+            enderChestItems = EncodedObject.Base64(it.enderChestItems),
+            effects = EncodedObject.Base64(it.effects)
         )
     }
 

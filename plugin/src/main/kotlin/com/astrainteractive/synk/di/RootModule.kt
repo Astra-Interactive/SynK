@@ -6,8 +6,7 @@ import com.astrainteractive.synk.bungee.di.SpigotBungeeModule
 import com.astrainteractive.synk.command.di.CommandModule
 import com.astrainteractive.synk.event.di.EventModule
 import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
-import ru.astrainteractive.astralibs.encoding.BukkitIOStreamProvider
-import ru.astrainteractive.astralibs.encoding.Encoder
+import ru.astrainteractive.astralibs.encoding.encoder.BukkitObjectEncoder
 import ru.astrainteractive.synk.core.di.CoreModule
 
 interface RootModule {
@@ -27,7 +26,7 @@ interface RootModule {
             CoreModule.Default(
                 dataFolder = pluginModule.plugin.value.dataFolder,
                 dispatchers = DefaultBukkitDispatchers(pluginModule.plugin.value),
-                encoder = Encoder(BukkitIOStreamProvider)
+                encoder = BukkitObjectEncoder()
             )
         }
 

@@ -3,8 +3,6 @@ import com.astrainteractive.synk.command.history
 import com.astrainteractive.synk.command.reload
 import com.astrainteractive.synk.command.syncServer
 import com.astrainteractive.synk.command.tabCompleter
-import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
-import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 
 /**
  * Command handler for your plugin
@@ -12,8 +10,7 @@ import ru.astrainteractive.astralibs.string.BukkitTranslationContext
  * @see Reload
  */
 class CommandManager(dependencies: CommandDependencies) :
-    CommandDependencies by dependencies,
-    BukkitTranslationContext by BukkitTranslationContext.Default({ KyoriComponentSerializer.Legacy }) {
+    CommandDependencies by dependencies {
     /**
      * Here you should declare commands for your plugin
      *

@@ -8,7 +8,7 @@ import com.astrainteractive.synk.api.local.mapping.BukkitPlayerMapper
 import com.astrainteractive.synk.api.local.mapping.BukkitPlayerMapperImpl
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.encoding.Encoder
+import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
 import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.getValue
 
@@ -17,7 +17,7 @@ interface BukkitApiLocalModule {
     val localPlayerDataSource: LocalInventoryApi<ItemStack>
     val playerLoader: PlayerLoader
 
-    class Default(encoder: Encoder, plugin: JavaPlugin) : BukkitApiLocalModule {
+    class Default(encoder: ObjectEncoder, plugin: JavaPlugin) : BukkitApiLocalModule {
         override val bukkitPlayerMapper: BukkitPlayerMapper by Provider {
             BukkitPlayerMapperImpl(encoder = encoder)
         }

@@ -2,7 +2,7 @@ package ru.astrainteractive.synk.core.di
 
 import kotlinx.coroutines.CoroutineScope
 import ru.astrainteractive.astralibs.async.AsyncComponent
-import ru.astrainteractive.astralibs.encoding.Encoder
+import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
 import ru.astrainteractive.klibs.kdi.Dependency
@@ -21,12 +21,12 @@ interface CoreModule {
     val dispatchers: KotlinDispatchers
     val translation: Dependency<PluginTranslation>
     val configurationModule: Dependency<PluginConfig>
-    val encoder: Encoder
+    val encoder: ObjectEncoder
 
     class Default(
         dataFolder: File,
         override val dispatchers: KotlinDispatchers,
-        override val encoder: Encoder
+        override val encoder: ObjectEncoder
     ) : CoreModule {
         override val yamlSerializer: YamlSerializer by lazy {
             YamlSerializer()

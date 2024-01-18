@@ -3,7 +3,7 @@ package com.astrainteractive.synk.api.local
 import com.astrainteractive.synk.api.local.mapping.BukkitPlayerMapper
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.filemanager.DefaultSpigotFileManager
+import ru.astrainteractive.astralibs.filemanager.DefaultFileConfigurationManager
 import ru.astrainteractive.synk.core.model.PlayerModel
 import java.io.File
 
@@ -16,7 +16,7 @@ internal class BukkitLocalInventoryApi(
         val bukkitPlayer = bukkitPlayerMapper.fromDTO(playerModel)
 
         val name = "temp/${playerModel.minecraftUUID}/${type.name}_${System.currentTimeMillis()}.yml"
-        val fileManager = DefaultSpigotFileManager(plugin, name)
+        val fileManager = DefaultFileConfigurationManager(plugin, name)
         val config = fileManager.fileConfiguration
         config.set("player.items", bukkitPlayer.inventory.contents)
         config.set("player.enderchest", bukkitPlayer.enderChest.contents)
@@ -31,14 +31,14 @@ internal class BukkitLocalInventoryApi(
 
     override fun readPlayerInventorySave(playerModel: PlayerModel, file: File): List<ItemStack> {
         val name = "temp/${playerModel.minecraftUUID}/${file.name}"
-        val fileManager = DefaultSpigotFileManager(plugin, name)
+        val fileManager = DefaultFileConfigurationManager(plugin, name)
         val config = fileManager.fileConfiguration
         return config.getList("player.items") as? List<ItemStack> ?: emptyList()
     }
 
     override fun readPlayerEnderChestSave(playerModel: PlayerModel, file: File): List<ItemStack> {
         val name = "temp/${playerModel.minecraftUUID}/${file.name}"
-        val fileManager = DefaultSpigotFileManager(plugin, name)
+        val fileManager = DefaultFileConfigurationManager(plugin, name)
         val config = fileManager.fileConfiguration
         return config.getList("player.enderchest") as? List<ItemStack> ?: emptyList()
     }

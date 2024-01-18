@@ -6,6 +6,7 @@ import com.astrainteractive.synk.bungee.BungeeController
 import com.astrainteractive.synk.di.RootModule
 import com.astrainteractive.synk.shared.EventController
 import kotlinx.coroutines.CoroutineScope
+import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
 import ru.astrainteractive.klibs.kdi.getValue
 import ru.astrainteractive.synk.core.PluginConfig
 import ru.astrainteractive.synk.core.PluginTranslation
@@ -18,6 +19,7 @@ interface CommandDependencies {
     val bukkitPlayerMapper: BukkitPlayerMapper
     val bungeeController: BungeeController
     val scope: CoroutineScope
+    val kyoriComponentSerializer: KyoriComponentSerializer
 
     class Default(rootModule: RootModule) : CommandDependencies {
         override val plugin: SynK by rootModule.pluginModule.plugin
@@ -27,5 +29,6 @@ interface CommandDependencies {
         override val bukkitPlayerMapper: BukkitPlayerMapper = rootModule.apiLocalModule.bukkitPlayerMapper
         override val bungeeController: BungeeController by rootModule.spigotBungeeModule.bungeeController
         override val scope: CoroutineScope = rootModule.coreModule.pluginScope
+        override val kyoriComponentSerializer by rootModule.pluginModule.kyoriComponentSerializer
     }
 }

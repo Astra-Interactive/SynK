@@ -1,20 +1,21 @@
 package com.astrainteractive.synk.api.local.mapping
 
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.encoding.Encoder
+import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
+import ru.astrainteractive.astralibs.encoding.encoder.encodeList
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
 import ru.astrainteractive.synk.core.model.PlayerModel
 
 interface BukkitPlayerMapper : Mapper<Player, PlayerModel> {
     companion object {
-        operator fun invoke(serializer: Encoder): BukkitPlayerMapper {
+        operator fun invoke(serializer: ObjectEncoder): BukkitPlayerMapper {
             return BukkitPlayerMapperImpl(serializer)
         }
     }
 }
 
 internal class BukkitPlayerMapperImpl(
-    private val encoder: Encoder
+    private val encoder: ObjectEncoder
 ) : BukkitPlayerMapper {
     override fun toDTO(it: Player): PlayerModel = PlayerModel(
         minecraftUUID = it.uniqueId,

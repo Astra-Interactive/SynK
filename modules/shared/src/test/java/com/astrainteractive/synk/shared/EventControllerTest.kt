@@ -5,7 +5,7 @@ import com.astrainteractive.synk.api.remote.RemoteApi
 import com.astrainteractive.synk.api.remote.di.MockApiRemoteModule
 import com.astrainteractive.synk.locker.HashSetLocker
 import kotlinx.coroutines.runBlocking
-import ru.astrainteractive.astralibs.encoding.IO
+import ru.astrainteractive.astralibs.encoding.model.EncodedObject
 import ru.astrainteractive.klibs.mikro.core.dispatchers.DefaultKotlinDispatchers
 import ru.astrainteractive.synk.core.model.PlayerModel
 import java.util.UUID
@@ -25,9 +25,9 @@ class EventControllerTest {
             health = Random.nextDouble(0.0, 20.0),
             foodLevel = Random.nextInt(0, 20),
             lastServerName = UUID.randomUUID().toString(),
-            items = IO.Base64(""),
-            enderChestItems = IO.Base64(""),
-            effects = IO.Base64(""),
+            items = EncodedObject.Base64(""),
+            enderChestItems = EncodedObject.Base64(""),
+            effects = EncodedObject.Base64(""),
         )
 
     @BeforeTest

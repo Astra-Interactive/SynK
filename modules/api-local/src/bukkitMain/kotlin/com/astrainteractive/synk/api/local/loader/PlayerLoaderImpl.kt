@@ -4,10 +4,11 @@ import com.astrainteractive.synk.api.local.exception.ApiLocalException
 import org.bukkit.Bukkit
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
-import ru.astrainteractive.astralibs.encoding.Encoder
+import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
+import ru.astrainteractive.astralibs.encoding.encoder.decodeList
 import ru.astrainteractive.synk.core.model.PlayerModel
 
-internal class PlayerLoaderImpl(private val encoder: Encoder) : PlayerLoader {
+internal class PlayerLoaderImpl(private val encoder: ObjectEncoder) : PlayerLoader {
     override fun loadPlayer(it: PlayerModel) {
         val player = Bukkit.getPlayer(it.minecraftUUID) ?: throw ApiLocalException.PlayerNotFoundException
         player.totalExperience = it.totalExperience
