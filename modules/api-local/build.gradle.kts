@@ -10,9 +10,9 @@ minecraftMultiplatform {
     bukkit()
     dependencies {
         // AstraLibs
-        implementation(libs.minecraft.astralibs.ktxcore)
+        implementation(libs.minecraft.astralibs.core)
         // Bukkit
-        "bukkitMainCompileOnly"(libs.minecraft.astralibs.spigot.core)
+        "bukkitMainCompileOnly"(libs.minecraft.astralibs.core.bukkit)
         "bukkitMainCompileOnly"(libs.minecraft.paper.api)
         // Local
         implementation(projects.modules.core)

@@ -12,8 +12,8 @@ dependencies {
     implementation(libs.kotlin.serializationJson)
     implementation(libs.kotlin.serializationKaml)
     // AstraLibs
-    implementation(libs.minecraft.astralibs.ktxcore)
-    implementation(libs.minecraft.astralibs.spigot.core)
+    implementation(libs.minecraft.astralibs.core)
+    implementation(libs.minecraft.astralibs.core.bukkit)
     implementation(libs.minecraft.bstats)
     // SQL
     implementation(libs.driver.jdbc)

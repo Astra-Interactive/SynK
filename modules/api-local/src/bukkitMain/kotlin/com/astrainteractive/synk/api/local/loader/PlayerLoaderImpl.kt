@@ -5,7 +5,7 @@ import org.bukkit.Bukkit
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
-import ru.astrainteractive.astralibs.encoding.encoder.decodeList
+import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoderExt.decodeList
 import ru.astrainteractive.synk.core.model.PlayerModel
 
 internal class PlayerLoaderImpl(private val encoder: ObjectEncoder) : PlayerLoader {

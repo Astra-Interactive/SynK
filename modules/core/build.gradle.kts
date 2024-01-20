@@ -11,5 +11,5 @@ dependencies {
     implementation(libs.kotlin.serializationJson)
     implementation(libs.kotlin.serializationKaml)
     // AstraLibs
-    implementation(libs.minecraft.astralibs.ktxcore)
+    implementation(libs.minecraft.astralibs.core)
 }

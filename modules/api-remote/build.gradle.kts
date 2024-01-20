@@ -4,7 +4,7 @@ plugins {
 }
 dependencies {
     // AstraLibs
-    implementation(libs.minecraft.astralibs.ktxcore)
+    implementation(libs.minecraft.astralibs.core)
     // SQL
     implementation(libs.driver.jdbc)
     implementation(libs.driver.h2)

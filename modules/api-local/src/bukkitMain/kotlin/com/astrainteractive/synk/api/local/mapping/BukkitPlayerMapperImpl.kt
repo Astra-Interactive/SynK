@@ -2,7 +2,7 @@ package com.astrainteractive.synk.api.local.mapping
 
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
-import ru.astrainteractive.astralibs.encoding.encoder.encodeList
+import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoderExt.encodeList
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
 import ru.astrainteractive.synk.core.model.PlayerModel
 
